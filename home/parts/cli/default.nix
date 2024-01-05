@@ -2,7 +2,7 @@
   imports = [
     # @TODO
     ./packages.nix
-    #./git.nix
+    ./git.nix
     ./bash.nix
     #./shellcolor.nix
     #./ssh.nix

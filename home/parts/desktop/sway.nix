@@ -12,13 +12,6 @@
     };
   };
 
-  programs.waybar = {
-    enable = true;
-    # https://github.com/Alexays/Waybar/wiki/Configuration
-    #settings = {
-    #};
-  };
-
   wayland.windowManager.sway = {
     enable = true;
     config = rec {
@@ -30,17 +23,34 @@
 
       gaps = {
         smartBorders = "on";
-        smartGaps = true;
+        #smartGaps = true;
         # @TODO: test these
-        horizontal = 5;
-        vertical = 5;
-        #inner = 5;
-        #outer = 5;
+        #horizontal = 5;
+        #vertical = 5;
+        inner = 10;
+        #outer = 10;
       };
 
+      # @TODO: https://wiki.archlinux.org/title/sway#Idle
+
+      # https://man.archlinux.org/man/sway-input.5
       input = {
-        "*" = {
+        # Dell latitude
+        "1:1:AT_Translated_Set_2_keyboard" = {
+          xkb_layout = "us";
           xkb_variant = "colemak";
+        };
+        "type:keyboard" = {
+          repeat_rate = "36";
+          repeat_delay = "220";
+        };
+        "type:touchpad" = {
+          natural_scroll = "enabled";
+          dwt = "enabled";
+          #tap = "enabled";
+          click_method = "clickfinger";
+          accel_profile = "adaptive";
+          pointer_accel = "0.3";
         };
       };
     };
