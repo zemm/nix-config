@@ -1,17 +1,16 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { pkgs, inputs, config, ... }:
 
 {
   imports =
     [
-      #inputs.hardware.nixosModules.
+      inputs.hardware.nixosModules.common-cpu-intel
+      inputs.hardware.nixosModules.common-pc-ssd
+      #inputs.hardware.nixosModules.dell-latitude-7440
       ./hardware-configuration.nix
-    ];
 
-  boot.tmp.cleanOnBoot = true;
+      ../../parts/common
+      ../../users/juperaja.nix
+    ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -26,39 +25,9 @@
   boot.initrd.luks.devices."luks-09d052fa-324d-453e-8c39-acd57048b8e0".device = "/dev/disk/by-uuid/09d052fa-324d-453e-8c39-acd57048b8e0";
   boot.initrd.luks.devices."luks-09d052fa-324d-453e-8c39-acd57048b8e0".keyFile = "/crypto_keyfile.bin";
 
-  console.keyMap = "colemak";
-
   networking.hostName = "stoat";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   networking.networkmanager.enable = true;
-
-  time.timeZone = "Europe/Helsinki";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "fi_FI.UTF-8";
-    LC_IDENTIFICATION = "fi_FI.UTF-8";
-    LC_MEASUREMENT = "fi_FI.UTF-8";
-    LC_MONETARY = "fi_FI.UTF-8";
-    LC_NAME = "fi_FI.UTF-8";
-    LC_NUMERIC = "fi_FI.UTF-8";
-    LC_PAPER = "fi_FI.UTF-8";
-    LC_TELEPHONE = "fi_FI.UTF-8";
-    LC_TIME = "fi_FI.UTF-8";
-  };
-  i18n.supportedLocales = [
-    "en_US.UTF-8/UTF-8"
-    "fi_FI.UTF-8/UTF-8"
-  ];
-
-  location.latitude = 62.14;
-  location.longitude = 25.44;
 
   nix = {
     package = pkgs.nixFlakes;
@@ -66,7 +35,6 @@
       experimental-features = nix-command flakes
     '';
   };
-  nixpkgs.config.allowUnfree = true;
 
   #security.pam.services.swaylock.text = ''
   #  auth include login
@@ -110,40 +78,18 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.juperaja = {
-    isNormalUser = true;
-    description = "juperaja";
-    # When moving user, see https://github.com/Misterio77/nix-config/blob/main/hosts/common/users/misterio/default.nix#L2
-    extraGroups = [
-      "audio"
-      "networkmanager"
-      "video"
-      "wheel"
-    ];
-    packages = with pkgs; [
-      firefox
-    #  thunderbird
-    #  spotify
-    #  microsoft-edge
-    #  teams
-    ];
-  };
-#  home-manager.users.juperaja = import ../../home/${config.networking.hostName}.nix;
-
   # Allow unfree packages
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    elinks
+    # @TODO: move to features / common / home-manager
+    #alacritty
     fend
+    elinks
     git
-    helix
     iio-sensor-proxy
-    lynx
     tmux
     wget
+    lynx
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -153,6 +99,9 @@
     enable = true;
     enableSSHSupport = true;
   };
+
+  # Required for brightness and volume keys?
+  programs.light.enable = true;
 
   # List services that you want to enable:
 
