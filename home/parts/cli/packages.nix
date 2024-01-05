@@ -6,8 +6,8 @@
     curl
     dnsutils # `dig`, `nslookup`
     file
-    gnupg
     jq
+    ipcalc
     sipcalc
     tree
     which
@@ -27,19 +27,14 @@
     #pciutils # lspci
     #usbutils # lsusb
 
-    # Utils
-    eza # ls
-    fd # find
-    fzf # fuzzy finder
-    ripgrep # grep
-    httpie # curl
-    diffsitter # diff
-    timer
-
     # Nix
     #nil # Nix LSP
     #nixfmt # Nix formatter
     #nvd # Differ
     nix-output-monitor # `nom`
   ];
+
+  programs.gpg = {
+    enable = true;
+  };
 }

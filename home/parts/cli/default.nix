@@ -3,10 +3,10 @@
     # @TODO
     ./packages.nix
     ./git.nix
-    ./bash.nix
+    ./shell.nix
+    ./pass.nix
     #./shellcolor.nix
     #./ssh.nix
-    ./starship.nix
     #./tmux.nix
   ];
 }

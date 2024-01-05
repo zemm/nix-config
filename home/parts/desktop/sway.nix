@@ -12,6 +12,9 @@
     };
   };
 
+  # @TODO swaylock https://nix-community.github.io/home-manager/options.xhtml#opt-programs.swaylock.enable
+  # @TODO swayr https://sr.ht/~tsdh/swayr/ https://nix-community.github.io/home-manager/options.xhtml#opt-programs.swayr.enable
+
   wayland.windowManager.sway = {
     enable = true;
     config = rec {

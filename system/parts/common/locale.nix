@@ -5,6 +5,8 @@
   time.timeZone = "Europe/Helsinki";
 
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
+
+  # @TODO: user home-manager's home.language ?
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "fi_FI.UTF-8";
     LC_IDENTIFICATION = "fi_FI.UTF-8";
