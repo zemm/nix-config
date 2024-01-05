@@ -12,8 +12,30 @@
     };
   };
 
+  # @TODO swayidle? https://nix-community.github.io/home-manager/options.xhtml#opt-services.swayidle.enable
   # @TODO swaylock https://nix-community.github.io/home-manager/options.xhtml#opt-programs.swaylock.enable
+  # @TODO betterlockscreen?
+  # @TODO screen-locker?
+
   # @TODO swayr https://sr.ht/~tsdh/swayr/ https://nix-community.github.io/home-manager/options.xhtml#opt-programs.swayr.enable
+  # @TODO eww? https://github.com/elkowar/eww
+  # @TODO blueman-applet?
+  # @TODO undiskie?
+
+  # wallpapers
+  # @TODO wpaperd? https://github.com/danyspin97/wpaperd https://nix-community.github.io/home-manager/options.xhtml#opt-programs.wpaperd.settings
+  # @TODO random-background? https://nix-community.github.io/home-manager/options.xhtml#opt-services.random-background.enable
+
+  # notifications:
+  # @TODO avizo? https://github.com/misterdanb/avizo https://nix-community.github.io/home-manager/options.xhtml#opt-services.avizo.enable
+  # @TODO dunz? https://github.com/dunst-project/dunst
+  # @TODO fnott? https://codeberg.org/dnkl/fnott
+
+  # brightness:
+  # @TODO gammastep? https://gitlab.com/chinstrap/gammastep
+  # @TODO redshift?
+  # @TODO safeeyes?
+  # @TODO sctd?
 
   wayland.windowManager.sway = {
     enable = true;

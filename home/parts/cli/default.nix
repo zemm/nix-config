@@ -1,12 +1,12 @@
 { pkgs, ... }: {
   imports = [
-    # @TODO
-    ./packages.nix
+    ./desktop.nix
     ./git.nix
-    ./shell.nix
+    ./packages.nix
     ./pass.nix
+    ./shell.nix
     #./shellcolor.nix
     #./ssh.nix
-    #./tmux.nix
+    ./tmux.nix
   ];
 }

@@ -12,27 +12,41 @@
     timer
   ];
 
-  #programs.atuin = {
-  #  enable = true;
-  #  flags = [
-  #    #"--disable-up-arrow"
-  #    #"--disable-ctrl-r"
-  #  ];
-  #  # https://atuin.sh/docs/config
-  #  settings = {
-  #    update_check = false;
-  #    sync_address = "http://localhost";
-  #    enter_accept = false;
-  #  };
-  #};
-
-  # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.skim.enable
-  programs.skim = {
+  programs.atuin = {
     enable = true;
+    flags = [
+      "--disable-up-arrow"
+      #"--disable-ctrl-r"
+    ];
+    # https://atuin.sh/docs/config
+    settings = {
+      update_check = false;
+      sync_address = "http://localhost";
+      enter_accept = false;
+    };
+  };
+
+  programs.bash = {
+    enable = true;
+    historyControl = [ "ignoredups" "ignorespace" ];
+    historyIgnore = [ "ls" "cd" "exit" ];
+    #bashrcExtra = ''
+    #'';
+    #initExtra = ''
+    #'';
+    #profileExtra = ''
+    #'';
   };
 
   programs.carapace = {
-    enable = true;
+    # Disabled because it's broken with `watch cat $file`
+    enable = false;
+  };
+
+  # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.skim.enable
+  programs.skim = {
+    # Disabled because it's broken with starship
+    enable = false;
   };
 
   programs.starship = {
@@ -51,19 +65,6 @@
         style = "red";
       };
     };
-  };
-
-  programs.bash = {
-    enable = true;
-    historyControl = [ "ignoredups" "ignorespace" ];
-    historyIgnore = [ "ls" "cd" "exit" ];
-
-    #bashrcExtra = ''
-    #'';
-    #initExtra = ''
-    #'';
-    #profileExtra = ''
-    #'';
   };
 
   programs.tealdeer = {

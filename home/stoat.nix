@@ -15,6 +15,7 @@
   manual.html.enable = true;
 
   # @TODO: programs.borgmatic
+  # @TODO: services.borgmatic
 
   # @TODO: https://nix-community.github.io/home-manager/options.xhtml#opt-programs.ssh.matchBlocks
   #programs.ssh.matchBlocks = {
