@@ -2,13 +2,18 @@
 {
   home.packages = with pkgs; [
     # Basics
+    apg
     bc
     curl
     file
+    gnumake
     jq
     tree
+    unzip
+    wget
     which
     yq-go
+    zip
 
     # System & monitoring
     bottom # system viewer

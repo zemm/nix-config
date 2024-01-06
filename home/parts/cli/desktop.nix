@@ -5,6 +5,11 @@
     dnsutils # `dig`, `nslookup`
     ipcalc
     sipcalc
+    elinks
+    lynx
+
+    # Fancies
+    neofetch # the fancy cli system info banner thingy
 
     # System & monitoring
     ltrace # library call monitoring

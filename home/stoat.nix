@@ -2,8 +2,7 @@
   imports = [
     ./parts/base.nix
     ./parts/cli
-    ./parts/desktop/sway.nix
-    ./parts/desktop/waybar.nix
+    ./parts/sway
   ];
 
   home.packages = with pkgs; [
