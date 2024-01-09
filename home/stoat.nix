@@ -3,6 +3,7 @@
     ./parts/base.nix
     ./parts/cli
     ./parts/sway
+    ./parts/sway/waybar.nix
   ];
 
   home.packages = with pkgs; [

@@ -3,10 +3,18 @@
   # https://nix-community.github.io/home-manager/options.xhtml
 
   home.packages = with pkgs; [
-    #blueman-applet
+    # Utils
+    feh
+
+    # Tray
     networkmanagerapplet # for nm-applet
     pulseaudio # for pactl
     volumeicon
+
+    # Screenshotting
+    grim # screenshotting
+    slurp # select screen area
+    wayshot # screenshotting
   ];
 
   programs.alacritty = {
@@ -252,6 +260,10 @@
       bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
       bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
       bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+
+      # Screengrap
+      bindsym Print exec 'grim ~/Pictures/screenshots/screen_$(date -u +%Y%m%d-%H%M%S).png'
+      bindsym Mod4+Print exec 'wayshot --slurp="$(slurp)" -f ~/Pictures/screenshots/area_$(date -u +%Y%m%d-%H%M%S).png'
     '';
 
     #extraSessionCommands = "";
