@@ -14,3 +14,7 @@ nixos:
 # Alias
 .PHONY: system
 system: nixos
+
+.PHONY: update
+update:
+	nix flake update
