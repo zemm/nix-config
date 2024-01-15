@@ -3,12 +3,12 @@
     ./parts/base.nix
     ./parts/cli
     ./parts/sway
-    ./parts/sway/waybar.nix
+    #./parts/desktop/xrandr.nix
+    ./parts/work
   ];
 
   home.packages = with pkgs; [
     vscode # @TODO: move to desktop packages
-    cowsay
     arandr
   ];
 

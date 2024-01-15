@@ -4,13 +4,17 @@
     pkgs.gsimplecal
   ];
 
+  wayland.windowManager.sway.config.bars = [];
+
   # https://github.com/Alexays/Waybar/wiki
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
     # https://github.com/Alexays/Waybar/wiki/Configuration
     #
     # Inspirations:
     # https://gitlab.com/jbauernberger/dotfiles/-/tree/master/.config/waybar
+    # https://github.com/yurihikari/garuda-sway-config
     #
     settings = {
       mainBar = {
@@ -30,7 +34,6 @@
         ];
         modules-center = [
           "sway/window"
-          "custom/hello-from-waybar"
         ];
         modules-right = [
           "idle_inhibitor"
@@ -59,14 +62,15 @@
         };
 
         bluetooth = {
-          format = "{icon}";
-          format-alt = "bt:{status}";
+          format = "bt:{status}";
+          #format-alt = "bt:{status}";
           interval = 30;
-          format-icons = {
-            enabled = "";
-            disabled = "";
-          };
-          tooltip-format = "{status}";
+          #format-icons = {
+          #  enabled = "";
+          #  disabled = "";
+          #};
+          tooltip-format = "bluetooth {status}";
+          on-click = "blueman-manager";
         };
 
         clock = {
