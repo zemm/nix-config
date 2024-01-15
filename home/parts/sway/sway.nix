@@ -220,6 +220,7 @@
         "1:1:AT_Translated_Set_2_keyboard" = {
           xkb_layout = "us";
           xkb_variant = "colemak";
+          xkb_options = "caps:backspace,nbsp:none";
         };
         "type:keyboard" = {
           repeat_rate = "36";

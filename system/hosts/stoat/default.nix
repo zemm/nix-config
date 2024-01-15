@@ -43,9 +43,10 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.sessionPackages = [ pkgs.sway ];
   services.xserver.desktopManager.gnome.enable = true;
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "us";
-    xkbVariant = "colemak";
+    variant = "colemak";
+    options = "caps:backspace,nbsp:none,terminate:ctrl_alt_bksp";
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
