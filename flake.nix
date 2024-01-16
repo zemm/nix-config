@@ -16,6 +16,9 @@
     #nix-colors.url = "github:misterio77/nix-colors";
 
     #flake-utils.url = "github:numtide/flake-utils";
+
+    catppuccin-waybar.url = "github:catppuccin/waybar/main";
+    catppuccin-waybar.flake = false;
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:

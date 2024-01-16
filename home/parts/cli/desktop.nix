@@ -34,10 +34,12 @@
 
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = true;
+    enableSshSupport = false;
     defaultCacheTtl = 60;
     defaultCacheTtlSsh = 43200;
   };
+
+  #programs.ssh.addKeysToAgent = "confirm";
 
   # Terminal file manager
   # https://github.com/sxyazi/yazi

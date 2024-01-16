@@ -3,6 +3,7 @@
     ./parts/base.nix
     ./parts/cli
     ./parts/sway
+    ./parts/desktop/browsers.nix
     #./parts/desktop/xrandr.nix
     ./parts/work
   ];

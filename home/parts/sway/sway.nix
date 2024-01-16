@@ -1,5 +1,9 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 {
+  imports = [
+    ./themes/catppuccin-latte.nix
+  ];
+
   # https://nix-community.github.io/home-manager/options.xhtml
 
   home.packages = with pkgs; [
@@ -15,6 +19,8 @@
     slurp # select screen area
     wayshot # screenshotting
   ];
+
+  # @TODO fancy lock? https://github.com/mortie/swaylock-effects
 
   programs.swaylock = {
     enable = true;
@@ -69,14 +75,14 @@
       }
     ];
     timeouts = [
-      { timeout = 300;
+      { timeout = 20*60;
         command = "${pkgs.sway}/bin/swaymsg \"output * power off\"";
         resumeCommand = "${pkgs.sway}/bin/swaymsg \"output * power on\"";
       }
-      { timeout = 600;
+      { timeout = 30*60;
         command = "${pkgs.swaylock}/bin/swaylock -f";
       }
-      { timeout = 900;
+      { timeout = 40*60;
         command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
@@ -123,7 +129,7 @@
       eDP-1 = {
         path = "${config.home.homeDirectory}/Pictures/wall1";
         duration = "60m";
-        apply-shadow = true;
+        apply-shadow = false;
       };
     };
   };
@@ -147,73 +153,7 @@
     cfg = config.wayland.windowManager.sway;
   in {
     enable = true;
-    config = let
-      black = "#000000";
-      blue = "#2b2e36";
-      foreground = "#00d48b";
-      activebg2 = "#003f15";
-      activebg = "#004433";
-      grey = "#b0b287";
-      green = "#789073";
-      red = "#ef2929";
-    in rec {
-      colors = {
-        #background = "${black}";
-        background = "${blue}";
-        focused = {
-          background = "${activebg2}";
-          border = "${activebg}";
-          childBorder = "${foreground}";
-          indicator = "${red}";
-          text = "${foreground}";
-        };
-        focusedInactive = {
-          background = "${blue}";
-          border = "${black}";
-          childBorder = "${blue}";
-          indicator = "${red}";
-          text = "${foreground}";
-        };
-        unfocused = {
-          background = "${black}";
-          border = "${black}";
-          childBorder = "${blue}";
-          indicator = "${red}";
-          text = "${green}";
-        };
-        urgent = {
-          background = "${red}";
-          border = "${red}";
-          childBorder = "${blue}";
-          indicator = "${red}";
-          text = "${blue}";
-        };
-        placeholder = {
-          background = "${blue}";
-          border = "${black}";
-          childBorder = "${blue}";
-          indicator = "${red}";
-          text = "${blue}";
-        };
-      };
-
-      fonts = {
-        names = [ "Ubuntu Mono" "DejaVu Sans Mono" "FontAwesome5Free" ];
-        #names = [ "Noto Sans" "DejaVu Sans Mono" "FontAwesome5Free" ];
-        #style = "Monospace";
-        style = "Semi-Condensed";
-        size = 10.0;
-      };
-
-      gaps = {
-        smartBorders = "on";
-        #smartGaps = true;
-        #horizontal = 5;
-        #vertical = 5;
-        inner = 10;
-        #outer = 10;
-      };
-
+    config = rec {
       # https://man.archlinux.org/man/sway-input.5
       input = {
         # Dell latitude
@@ -336,13 +276,6 @@
       ];
 
       terminal = "alacritty";
-
-      # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.window
-      window = {
-        border = 0;
-        hideEdgeBorders = "both";
-        titlebar = false;
-      };
 
       workspaceAutoBackAndForth = true;
 

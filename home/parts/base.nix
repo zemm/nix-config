@@ -43,6 +43,10 @@
   #programs.git.enable = true;
   programs.home-manager.enable = true;
 
+  home.keyboard = {
+    options = "caps:backspace";
+  };
+
   # Nicely reload system units when changing configs
   #systemd.user.startServices = "sd-switch";
 }
