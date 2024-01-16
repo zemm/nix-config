@@ -60,10 +60,10 @@
   # Needed for Sway with home manager
   security.polkit.enable = true;
   security.rtkit.enable = true;
-  #security.pam.services = { swaylock = { }; };
-  #security.pam.services.swaylock.text = ''
-  #  auth include login
-  #'';
+  security.pam.services = { swaylock = { }; };
+  security.pam.services.swaylock.text = ''
+    auth include login
+  '';
 
   services.blueman.enable = true;
 
