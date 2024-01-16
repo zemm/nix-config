@@ -7,6 +7,9 @@
   # https://nix-community.github.io/home-manager/options.xhtml
 
   home.packages = with pkgs; [
+    # Desktop programs
+    gnome.nautilus
+
     # Utils
     feh
 
