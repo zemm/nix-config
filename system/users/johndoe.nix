@@ -5,9 +5,9 @@ in
   # Requires managed passwords
   #users.mutableUsers = false;
 
-  users.users.juperaja = {
+  users.users.johndoe = {
     isNormalUser = true;
-    description = "juperaja";
+    description = "johndoe";
     extraGroups = [
       "audio"
       "video"
@@ -20,10 +20,6 @@ in
     ];
     packages = with pkgs; [
       home-manager
-      firefox # @TODO: move to home-manager
-    #  spotify
-    #  microsoft-edge
-    #  teams
     ];
   };
 
@@ -34,8 +30,5 @@ in
   #  neededForUsers = true;
   #};
 
-  #home-manager.users.juperaja = import ../../home/${config.networking.hostName}.nix;
-
-  services.geoclue2.enable = true;
-  security.pam.services = { swaylock = { }; };
+  #home-manager.users.johndoe = import ../../home/${config.networking.hostName}.nix;
 }

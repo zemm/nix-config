@@ -13,12 +13,7 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    #nix-colors.url = "github:misterio77/nix-colors";
-
     #flake-utils.url = "github:numtide/flake-utils";
-
-    catppuccin-waybar.url = "github:catppuccin/waybar/main";
-    catppuccin-waybar.flake = false;
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -59,8 +54,8 @@
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
-        stoat = nixpkgs.lib.nixosSystem {
-          modules = [ ./system/hosts/stoat ];
+        myhost = nixpkgs.lib.nixosSystem {
+          modules = [ ./system/hosts/myhost ];
           specialArgs = { inherit inputs outputs; };
         };
       };
@@ -68,15 +63,15 @@
       # Standalone home-manager configuration entrypoint
       # Available through 'home-manager --flake .#your-username@your-hostname'
       homeConfigurations = {
-        "juperaja@stoat" = home-manager.lib.homeManagerConfiguration {
+        "johndoe@myhost" = home-manager.lib.homeManagerConfiguration {
           modules = [
             {
-              home.username = "juperaja";
-              home.homeDirectory = "/home/juperaja";
+              home.username = "johdoe";
+              home.homeDirectory = "/home/johdoe";
               # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-              home.stateVersion = "23.05";
+              home.stateVersion = "23.11";
             }
-            ./home/stoat.nix
+            ./home/johndoe_myhost.nix
           ];
           pkgs = pkgsFor.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
