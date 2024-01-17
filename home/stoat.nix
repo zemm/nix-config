@@ -4,13 +4,12 @@
     ./parts/cli
     ./parts/sway
     ./parts/desktop/browsers.nix
-    #./parts/desktop/xrandr.nix
+    #./parts/desktop/randr.nix
+    ./parts/desktop/vscode.nix
     ./parts/work
   ];
 
   home.packages = with pkgs; [
-    vscode # @TODO: move to desktop packages
-    arandr
   ];
 
   manual.html.enable = true;

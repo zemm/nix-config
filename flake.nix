@@ -21,13 +21,17 @@
     catppuccin-waybar.flake = false;
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
       systems = [ "x86_64-linux" ];
       forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
       pkgsFor = lib.genAttrs systems (system: import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      });
+      pkgsUnstableFor = lib.genAttrs systems (system: import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       });
@@ -79,7 +83,10 @@
             ./home/stoat.nix
           ];
           pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = {
+            inherit inputs outputs;
+            pkgsUnstable = pkgsUnstableFor.x86_64-linux;
+          };
         };
       };
     };

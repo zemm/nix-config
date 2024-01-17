@@ -67,6 +67,11 @@
     };
   };
 
+  services.gnome-keyring = {
+    enable = true;
+    #components = [ "secrets" ];
+  };
+
   services.swayidle = {
     enable = true;
     events = [
@@ -98,8 +103,9 @@
       window.opacity = 0.95;
       window.blur = true;
       # @TODO: colors
-      colors.primary.background = "#050505";
+      #colors.primary.background = "#050505";
       #colors.primary.background = "#fafafa";
+      selection.save_to_clipboard = false;
     };
   };
 
@@ -156,6 +162,7 @@
     cfg = config.wayland.windowManager.sway;
   in {
     enable = true;
+
     config = rec {
       # https://man.archlinux.org/man/sway-input.5
       input = {
