@@ -26,7 +26,7 @@
           "sway/workspaces"
           "sway/mode"
           "sway/scratchpad"
-          "sway/window"
+          #"sway/window"
         ];
         modules-center = [
           #"sway/window"

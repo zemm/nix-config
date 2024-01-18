@@ -5,21 +5,13 @@
   home.packages = with pkgs; [
     # Desktop programs
     gnome.nautilus
+    kanshi # for display management
+    pulseaudio # for pactl
+    wdisplays # for display management
 
     # Utils
     feh
-    kanshi # for display management
-    wdisplays # for display management
     wl-clipboard
-
-    # Tray
-    networkmanagerapplet # for nm-applet
-    pulseaudio # for pactl
-
-    # Screenshotting
-    grim # screenshotting
-    slurp # select screen area
-    wayshot # screenshotting
   ];
 
   # @TODO fancy lock? https://github.com/mortie/swaylock-effects
@@ -299,9 +291,9 @@
 
     # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.startup
     config.startup = [
-      { command = "wpaperd"; }
-      { command = "nm-applet"; }
-      { command = "blueman-applet"; }
+      { command = "${pkgs.wpaperd}/bin/wpaperd"; }
+      { command = "${pkgs.networkmanagerapplet}/bin/nm-applet"; }
+      { command = "${pkgs.blueman}/bin/blueman-applet"; }
       #{ command = "volumeicon"; } # does not work
       { command = "systemctl --user restart waybar || :";
         always = true;
@@ -311,7 +303,7 @@
       }
     ];
 
-    config.terminal = "alacritty";
+    config.terminal = "${pkgs.alacritty}/bin/alacritty";
 
     config.workspaceAutoBackAndForth = true;
 
@@ -336,17 +328,17 @@
 
     extraConfig = ''
       # Brightness
-      bindsym XF86MonBrightnessDown exec light -U 10
-      bindsym XF86MonBrightnessUp exec light -A 10
+      bindsym XF86MonBrightnessDown exec ${pkgs.light}/bin/light -U 10
+      bindsym XF86MonBrightnessUp exec ${pkgs.light}/bin/light -A 10
 
       # Volume
-      bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
-      bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
-      bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+      bindsym XF86AudioRaiseVolume exec '${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1%'
+      bindsym XF86AudioLowerVolume exec '${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1%'
+      bindsym XF86AudioMute exec '${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle'
 
       # Screengrap
-      bindsym Print exec 'grim ~/Pictures/screenshots/screen_$(date -u +%Y%m%d-%H%M%S).png'
-      bindsym Mod4+Print exec 'wayshot --slurp="$(slurp)" -f ~/Pictures/screenshots/area_$(date -u +%Y%m%d-%H%M%S).png'
+      bindsym Print exec '${pkgs.grim}/bin/grim ~/Pictures/screenshots/screen_$(date -u +%Y%m%d-%H%M%S).png'
+      bindsym Mod4+Print exec '${pkgs.wayshot}/bin/wayshot --slurp="$(${pkgs.slurp}/bin/slurp)" -f ~/Pictures/screenshots/area_$(date -u +%Y%m%d-%H%M%S).png'
     '';
 
     #extraSessionCommands = "";
