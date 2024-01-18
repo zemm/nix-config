@@ -1,9 +1,5 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 {
-  imports = [
-    ./themes/catppuccin-latte.nix
-  ];
-
   # https://nix-community.github.io/home-manager/options.xhtml
 
   home.packages = with pkgs; [
@@ -104,9 +100,6 @@
     settings = {
       window.opacity = 0.95;
       window.blur = true;
-      # @TODO: colors
-      #colors.primary.background = "#050505";
-      #colors.primary.background = "#fafafa";
       selection.save_to_clipboard = false;
     };
   };
