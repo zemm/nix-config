@@ -305,6 +305,20 @@
       #workspaceOutputAssign = {}; # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.workspaceOutputAssign
     };
 
+    config.window.commands = [
+      { criteria = { app_id = "org.gnome.Calculator"; };
+        command = "floating enable";
+      }
+      { criteria = { app_id = "nm-openconnect-auth-dialog"; };
+        command = "floating enable";
+      }
+      { criteria = { window_type = "dialog"; };
+        command = "floating enable";
+      }
+      { criteria = { window_role = "dialog"; };
+        command = "floating enable";
+      }
+    ];
     #extraConfigEarly = "";
 
     extraConfig = ''
