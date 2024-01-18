@@ -64,7 +64,7 @@
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
         stoat = nixpkgs.lib.nixosSystem {
-          modules = [ ./system/hosts/stoat ];
+          modules = [ ./system/hosts/stoat/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
         };
       };
