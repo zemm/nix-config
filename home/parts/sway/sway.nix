@@ -12,6 +12,8 @@
 
     # Utils
     feh
+    kanshi # for display management
+    wdisplays # for display management
 
     # Tray
     networkmanagerapplet # for nm-applet
@@ -135,11 +137,16 @@
   programs.wpaperd = {
     enable = true;
     settings = {
-      eDP-1 = {
+      default = {
         path = "${config.home.homeDirectory}/Pictures/wall1";
         duration = "60m";
         apply-shadow = false;
       };
+      #eDP-1 = {
+      #  path = "${config.home.homeDirectory}/Pictures/wall1";
+      #  duration = "60m";
+      #  apply-shadow = false;
+      #};
     };
   };
 
@@ -282,7 +289,12 @@
         { command = "nm-applet"; }
         { command = "blueman-applet"; }
         #{ command = "volumeicon"; } # does not work
-        { command = "systemctl --user restart waybar || :"; always = true; }
+        { command = "systemctl --user restart waybar || :";
+          always = true;
+        }
+        { command = "systemctl --user restart kanshi || :";
+          always = true;
+        }
       ];
 
       terminal = "alacritty";

@@ -14,6 +14,35 @@
 
   manual.html.enable = true;
 
+  services.kanshi = {
+    enable = true;
+    profiles = {
+      int = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            mode = "1920x1200";
+            position = "0,0";
+          }
+        ];
+      };
+      aoc24_top = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            mode = "1920x1200";
+            position = "0,1080";
+          }
+          {
+            criteria = "AOC 24G2W1G4 0x000054B4";
+            mode = "1920x1080";
+            position = "0,0";
+          }
+        ];
+      };
+    };
+  };
+
   # @TODO: programs.borgmatic
   # @TODO: services.borgmatic
 
