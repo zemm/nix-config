@@ -10,6 +10,7 @@
     feh
     kanshi # for display management
     wdisplays # for display management
+    wl-clipboard
 
     # Tray
     networkmanagerapplet # for nm-applet
