@@ -15,7 +15,7 @@
     settings = {
       mainBar = {
         layer = "top";
-        position = "top";
+        position = "bottom";
         height = 20;
         #output = [
         #  "eDP-1"
@@ -45,7 +45,7 @@
         ];
 
         backlight = {
-          format = "{percent}% {icon}";
+          format = "{icon}  {percent}%";
           format-icons = ["" ""];
           tooltip = true;
         };
@@ -57,7 +57,7 @@
             "warning" = 25;
             "critical" = 15;
           };
-          format = "{capacity}% {time} {icon}";
+          format = "{icon}  {capacity}% {time}";
           #format-charging = "{capacity}% ";
           #format-plugged = "{capacity}% ";
           #format-alt = "{time} {icon}";
@@ -206,7 +206,7 @@
             car = "";
             default = ["" ""];
           };
-          on-click = "pavucontrol";
+          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
 
         #temperature = {
@@ -326,7 +326,7 @@
         background-color: alpha(@base, 1);
         border: 0 solid alpha(@crust, 0.3);
         color: @text;
-        font-family: UbuntuMono, monospace;
+        font-family: UbuntuMono Nerd Font, Hack, Ubuntu;
         font-size: 14px;
       }
 

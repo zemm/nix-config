@@ -69,11 +69,10 @@
       };
 
       fonts = {
-        names = [ "Ubuntu Mono" "DejaVu Sans Mono" "FontAwesome5Free" ];
-        #names = [ "Noto Sans" "DejaVu Sans Mono" "FontAwesome5Free" ];
+        names = [ "UbuntuMono Nerd Font" ];
         #style = "Monospace";
         style = "Semi-Condensed";
-        size = 10.0;
+        size = 11.0;
       };
 
       gaps = {
@@ -83,6 +82,7 @@
         #vertical = 5;
         inner = 10;
         #outer = 10;
+        bottom = 0;
       };
 
       # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.window
