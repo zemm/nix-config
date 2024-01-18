@@ -55,7 +55,7 @@
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
         myhost = nixpkgs.lib.nixosSystem {
-          modules = [ ./system/hosts/myhost ];
+          modules = [ ./system/hosts/myhost/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
         };
       };

@@ -18,3 +18,8 @@ system: nixos
 .PHONY: update
 update:
 	nix flake update
+
+.PHONY: gen-system
+gen-system:
+	mkdir -p ./system/hosts/$$(hostname)
+	nixos-generate-config --dir ./system/hosts/$$(hostname)
