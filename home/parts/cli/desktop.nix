@@ -34,10 +34,14 @@
 
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = false;
+    enableSshSupport = true;
+    #pinentryFlavor = "curses";
+    pinentryFlavor = "gnome3";
     defaultCacheTtl = 60;
-    defaultCacheTtlSsh = 43200;
+    defaultCacheTtlSsh = 60*60*12;
   };
+
+  #services.ssh-agent.enable = true;
 
   #programs.ssh.addKeysToAgent = "confirm";
 
