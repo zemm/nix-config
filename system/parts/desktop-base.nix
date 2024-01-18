@@ -26,9 +26,22 @@
     font-awesome
     font-awesome_5
     gentium
+    hack-font
     inconsolata
     liberation_ttf
-    (nerdfonts.override { fonts = [ "Cousine" "FiraCode" "DroidSansMono" "Ubuntu" "UbuntuMono" "Terminus" ]; })
+    (nerdfonts.override {
+      fonts = [
+        "Cousine"
+        "DejaVuSansMono"
+        "DroidSansMono"
+        "FiraCode"
+        "FiraMono"
+        "Hack"
+        "Terminus"
+        "Ubuntu"
+        "UbuntuMono"
+      ];
+    })
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
@@ -61,9 +74,9 @@
   security.polkit.enable = true;
   security.rtkit.enable = true;
   security.pam.services = { swaylock = { }; };
-  security.pam.services.swaylock.text = ''
-    auth include login
-  '';
+  #security.pam.services.swaylock.text = ''
+  #  auth include login
+  #'';
 
   services.blueman.enable = true;
 

@@ -60,8 +60,8 @@
   # started in user sessions.
   programs.mtr.enable = true;
   programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
+    enable = false;
+    enableSSHSupport = false;
   };
 
   # Required for brightness and volume keys?
