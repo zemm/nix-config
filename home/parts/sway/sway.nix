@@ -199,7 +199,7 @@
       keybindings = {
         "${modifier}+Return" = "exec ${cfg.config.terminal}";
         "${modifier}+Shift+q" = "kill";
-        "${modifier}+d" = "exec ${cfg.config.menu}";
+        #"${modifier}+d" = "exec ${cfg.config.menu}";
         "${modifier}+Space" = "exec ${cfg.config.menu}";
 
         #"${modifier}+${cfg.config.left}" = "focus left";
@@ -212,6 +212,7 @@
         "${modifier}+Up" = "focus up";
         "${modifier}+Right" = "focus right";
 
+        # Move focused container
         "${modifier}+Shift+${cfg.config.left}" = "move left";
         "${modifier}+Shift+${cfg.config.down}" = "move down";
         "${modifier}+Shift+${cfg.config.up}" = "move up";
@@ -222,16 +223,23 @@
         "${modifier}+Shift+Up" = "move up";
         "${modifier}+Shift+Right" = "move right";
 
+        # Move focused workspace to another monitor
+        "${modifier}+Control+Left" = "move workspace to output left";
+        "${modifier}+Control+Right" = "move workspace to output right";
+        "${modifier}+Control+Up" = "move workspace to output up";
+        "${modifier}+Control+Down" = "move workspace to output down";
+
         "${modifier}+h" = "splith";
         "${modifier}+v" = "splitv";
         "${modifier}+f" = "fullscreen toggle";
-        "${modifier}+u" = "focus parent";
+        "${modifier}+p" = "focus parent";
+        "${modifier}+Shift+p" = "focus child";
 
         "${modifier}+s" = "layout stacking";
         "${modifier}+w" = "layout tabbed";
-        "${modifier}+p" = "layout toggle split";
+        "${modifier}+t" = "layout toggle split";
 
-        "${modifier}+Shift+a" = "floating toggle";
+        "${modifier}+Shift+f" = "floating toggle";
         "${modifier}+a" = "focus mode_toggle";
 
         "${modifier}+1" = "workspace number 1";
