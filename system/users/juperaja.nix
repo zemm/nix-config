@@ -13,10 +13,11 @@ in
       "video"
       "wheel"
     ] ++ ifTheyExist [
-      "networkmanager"
       "docker"
+      "libvirtd"
+      "networkmanager"
       "podman"
-      # @TODO: other groups
+      "qemu-libvirtd"
     ];
     packages = with pkgs; [
       home-manager

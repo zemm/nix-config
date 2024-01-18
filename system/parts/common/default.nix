@@ -14,6 +14,13 @@
     extraSpecialArgs = { inherit inputs outputs; };
   };
 
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
   nixpkgs = {
     overlays = builtins.attrValues outputs.overlays;
     config = {

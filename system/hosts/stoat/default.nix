@@ -10,6 +10,8 @@
 
       ../../parts/common
       ../../parts/desktop-base.nix
+      ../../parts/virtualisation-podman.nix
+      ../../parts/virtualisation-libvirt.nix
       ../../users/juperaja.nix
     ];
 
@@ -29,13 +31,6 @@
   networking.hostName = "stoat";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
-
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
 
   services.geoclue2.enable = true;
 
