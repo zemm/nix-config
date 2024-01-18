@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgsUnstable, ... }:
 {
   # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.tmux.enable
   programs.tmux = {
@@ -11,7 +11,35 @@
 
     # @TODO: tmuxinator or tmuxp
     plugins = [
-      pkgs.tmuxPlugins.gruvbox
+      #{
+      #  plugin = pkgs.tmuxPlugins.gruvbox;
+      #  extraConfig = ''
+      #    set -g @tmux-gruvbox 'dark'
+      #  '';
+      #}
+      #{
+      #  plugin = pkgs.tmuxPlugins.catppuccin;
+      #  extraConfig = ''
+      #    #set -g @catppuccin_flavour 'latte'
+      #    #set -g @catppuccin_flavour 'frappe'
+      #    set -g @catppuccin_flavour 'macchiato'
+      #    #set -g @catppuccin_flavour 'mocha'
+      #    set -g @catppuccin_window_default_text "#W"
+      #    set -g @catppuccin_window_current_text "#W"
+      #  '';
+      #}
+      {
+        plugin = pkgs.tmuxPlugins.dracula;
+        extraConfig = ''
+          set -g @dracula-show-powerline true
+          set -g @dracula-refresh-rate 10
+          set -g @dracula-show-fahrenheit false
+          set -g @dracula-show-weather false
+          set -g @dracula-show-location false
+          set -g @dracula-show-timezone false
+          set -g @dracula-plugins "ssh-session attached-clients synchronize-panes"
+        '';
+      }
     ];
 
     extraConfig = ''
@@ -55,8 +83,6 @@
         set -g mouse-select-pane off \;\
         set -g mouse-select-window off \;\
         display 'Mouse: OFF'
-
-      set -g @tmux-gruvbox 'dark'
     '';
 
 #      ## ######################################################################## ###
