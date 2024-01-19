@@ -337,8 +337,8 @@
       bindsym XF86AudioMute exec '${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle'
 
       # Screengrap
-      bindsym Print exec '${pkgs.grim}/bin/grim ~/Pictures/screenshots/screen_$(date -u +%Y%m%d-%H%M%S).png'
-      bindsym Mod4+Print exec '${pkgs.wayshot}/bin/wayshot --slurp="$(${pkgs.slurp}/bin/slurp)" -f ~/Pictures/screenshots/area_$(date -u +%Y%m%d-%H%M%S).png'
+      bindsym Print exec '${pkgs.grim}/bin/grim ~/Pictures/Screenshots/screen_$(date -u +%Y%m%d-%H%M%S).png'
+      bindsym Mod4+Print exec '${pkgs.wayshot}/bin/wayshot --slurp="$(${pkgs.slurp}/bin/slurp)" -f ~/Pictures/Screenshots/area_$(date -u +%Y%m%d-%H%M%S).png'
     '';
 
     #extraSessionCommands = "";
