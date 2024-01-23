@@ -30,8 +30,11 @@
     enable = true;
     historyControl = [ "ignoredups" "ignorespace" ];
     historyIgnore = [ "ls" "cd" "exit" ];
-    #bashrcExtra = ''
-    #'';
+    bashrcExtra = ''
+      if [ -f ~/.bashrc.local ]; then
+        . ~/.bashrc.local
+      fi
+    '';
     #initExtra = ''
     #'';
     #profileExtra = ''
