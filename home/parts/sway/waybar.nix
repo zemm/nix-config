@@ -330,6 +330,41 @@
         font-size: 14px;
       }
 
+      #workspaces {
+        border-right: 1px solid @crust;
+      }
+      #workspaces button {
+        padding: 0 5px;
+        border-left: 1px solid @mantle;
+      }
+      #workspaces button * {
+        color: @text;
+      }
+      #workspaces button.visible {
+        background-color: alpha(@peach, 0.5);
+      }
+      #workspaces button.focused {
+        background-color: @peach;
+      }
+      #workspaces button:hover {
+        background: @peach;
+        border-top: none;
+        border-right: none;
+        border-bottom: none;
+        padding: 0 5px;
+        box-shadow: inherit;
+        text-shadow: inherit;
+      }
+      #workspaces button.urgent {
+        background-color: @red;
+      }
+      #workspaces button.visible *,
+      #workspaces button.focused *,
+      #workspaces button.urgent *,
+      #workspaces button:hover * {
+        color: @base;
+      }
+
       /* Each module */
       #backlight,
       #battery,
@@ -443,21 +478,6 @@
       #window {
         font-weight: bold;
         padding-left: 10px;
-      }
-
-      #workspaces button {
-        padding-left: 5px;
-        padding-right: 5px;
-        color: @mantle;
-      }
-      #workspaces button.focused {
-        background-color: @peach;
-        font-weight: bold;
-        color: #ffffff;
-      }
-      #workspaces button.urgent {
-        background-color: @red;
-        color: #ffffff;
       }
     '';
   };
