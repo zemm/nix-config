@@ -5,6 +5,7 @@
     [
       inputs.hardware.nixosModules.common-cpu-intel
       inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc-laptop
       #inputs.hardware.nixosModules.dell-latitude-7440
       ./hardware-configuration.nix
 
@@ -31,6 +32,7 @@
   networking.hostName = "stoat";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false;
 
   services.geoclue2.enable = true;
 
