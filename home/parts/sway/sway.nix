@@ -266,6 +266,9 @@
       "${modifier}+End" = "exec ${pkgs.swaylock}/bin/swaylock -f && ${pkgs.systemd}/bin/systemctl suspend";
       "${modifier}+Home" = "exec ${pkgs.swaylock}/bin/swaylock";
       "${modifier}+c" = "exec rofi -show calc";
+
+      # Rename current workspace
+      "${modifier}+Shift+n" = "exec swaymsg rename workspace to \"$(swaymsg -t get_workspaces|jq '.[]|select(.focused==true)|.num'):$(${pkgs.gnome.zenity}/bin/zenity --entry --title 'Rename workspace' --text 'New name:' --entry-text '')\"";
     };
 
     # home row keys for moving

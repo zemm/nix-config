@@ -346,6 +346,9 @@
       #workspaces button.focused {
         background-color: @peach;
       }
+      /*
+       * https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect
+       */
       #workspaces button:hover {
         background: @peach;
         border-top: none;
