@@ -14,35 +14,19 @@
     ];
 
   environment.systemPackages = with pkgs; [
-    curl
     #dropbox
     #dropbox-cli
     fend
-    firefox
-    gitFull
     gparted
-    #htop
-    #jq
-    #kicad
-    #libreoffice
     linuxPackages.tp_smapi
     lm_sensors
     maestral
     maestral-gui
-    microsoft-edge
     nix-index
-    pass
-    pciutils
     #qemu_kvm
-    rink
-    sipcalc
-    starship
-    tmux
-    unzip
     vagrant
     virt-manager
     #vivaldi
-    vscode
     wget
     wl-clipboard
     xclip
@@ -67,7 +51,6 @@
 
     ## PipeWire
     pavucontrol
-    #helvum
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -109,13 +92,9 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
-  #programs.gnupg.agent.enable = true;
-  #programs.gnupg.agent.enableSSHSupport = true;
-  #programs.ssh.agentTimeout = "18h";
-  #programs.ssh.startAgent = true;
 
   ## -S-
-  #security.chromiumSuidSandbox.enable = true;
+  security.chromiumSuidSandbox.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
   security.pam.services.juperaja.enableGnomeKeyring = true;

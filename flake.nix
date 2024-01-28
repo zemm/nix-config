@@ -63,6 +63,11 @@
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
+        rlyeh = nixpkgs.lib.nixosSystem {
+          modules = [ ./system/hosts/rlyeh/configuration.nix ];
+          specialArgs = { inherit inputs outputs; };
+        };
+
         stoat = nixpkgs.lib.nixosSystem {
           modules = [ ./system/hosts/stoat/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
@@ -81,6 +86,23 @@
               home.stateVersion = "23.05";
             }
             ./home/stoat.nix
+          ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+            pkgsUnstable = pkgsUnstableFor.x86_64-linux;
+          };
+        };
+
+        "zemm@rlyeh" = home-manager.lib.homeManagerConfiguration {
+          modules = [
+            {
+              home.username = "zemm";
+              home.homeDirectory = "/home/zemm";
+              # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+              home.stateVersion = "23.05";
+            }
+            ./home/rlyeh.nix
           ];
           pkgs = pkgsFor.x86_64-linux;
           extraSpecialArgs = {
