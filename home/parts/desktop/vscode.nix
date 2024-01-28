@@ -14,8 +14,8 @@
       vscode-extensions.catppuccin.catppuccin-vsc-icons
       vscode-extensions.dracula-theme.theme-dracula
       vscode-extensions.editorconfig.editorconfig
-      vscode-extensions.github.copilot
-      vscode-extensions.github.copilot-chat
+      #vscode-extensions.github.copilot
+      #vscode-extensions.github.copilot-chat
       vscode-extensions.jdinhlife.gruvbox
       vscode-extensions.mvllow.rose-pine
       vscode-extensions.roman.ayu-next
@@ -28,12 +28,12 @@
     ];
 
     # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.vscode.languageSnippets
-    userSettings = {
-      "workbench.colorTheme" = "Gruvbox Dark Medium";
-      "search.showLineNumbers" = true;
-      "editor.renderWhitespace" = "boundary";
-      "[nix]"."editor.indentSize" = 2;
-      "[nix]"."editor.detectIndentation" = false;
-    };
+    #userSettings = {
+    #  "workbench.colorTheme" = "Gruvbox Dark Medium";
+    #  "search.showLineNumbers" = true;
+    #  "editor.renderWhitespace" = "boundary";
+    #  "[nix]"."editor.indentSize" = 2;
+    #  "[nix]"."editor.detectIndentation" = false;
+    #};
   };
 }
