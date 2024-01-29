@@ -81,7 +81,7 @@
       { timeout = 30*60;
         command = "${pkgs.swaylock}/bin/swaylock -f";
       }
-      { timeout = 40*60;
+      { timeout = 120*60;
         command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
@@ -170,6 +170,9 @@
         xkb_options = "caps:backspace,nbsp:none";
       };
       "type:keyboard" = {
+        xkb_layout = "us";
+        xkb_variant = "colemak";
+        xkb_options = "caps:backspace,nbsp:none";
         repeat_rate = "36";
         repeat_delay = "220";
       };
