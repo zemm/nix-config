@@ -37,7 +37,7 @@
     enableSshSupport = false;
     #pinentryFlavor = "curses";
     pinentryFlavor = "gnome3";
-    defaultCacheTtl = 60;
+    defaultCacheTtl = 60*30;
     defaultCacheTtlSsh = 60*60*12;
   };
 
