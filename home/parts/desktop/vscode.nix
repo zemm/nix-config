@@ -3,7 +3,10 @@
   programs.vscode = {
     enable = true;
     enableExtensionUpdateCheck = true;
-    enableUpdateCheck = false;
+
+    # This will create settings.json
+    #enableUpdateCheck = false;
+
     #package = pkgs.vscodium;
     package = pkgsUnstable.vscode;
 
@@ -24,8 +27,8 @@
     #globalSnippets = { };
 
     # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.vscode.keybindings
-    keybindings = [
-    ];
+    #keybindings = [
+    #];
 
     # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.vscode.languageSnippets
     #userSettings = {
