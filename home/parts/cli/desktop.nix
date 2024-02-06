@@ -44,6 +44,9 @@
   services.ssh-agent.enable = true;
 
   #programs.ssh.addKeysToAgent = "confirm";
+  programs.ssh.extraConfig = ''
+    EnableEscapeCommandline yes
+  '';
 
   # Terminal file manager
   # https://github.com/sxyazi/yazi
