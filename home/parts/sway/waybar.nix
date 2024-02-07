@@ -261,7 +261,6 @@
           format = "{icon}  {alt}";
           tooltip-format = "{}";
           exec = pkgs.writeShellScript "waybar-vpn" ''
-            #!${pkgs.bash}/bin/bash
             if [ -d /proc/sys/net/ipv4/conf/tun0 ]; then
               conn=$( \
                 ${pkgs.networkmanager}/bin/nmcli c show --active \

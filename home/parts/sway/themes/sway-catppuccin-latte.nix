@@ -201,19 +201,19 @@
       padding-right: 10px;
       margin-left: 2px;
       margin-right: 2px;
-      border-radius: 10px;
+      border-radius: 8px;
     }
 
     #cpu {
       margin-right: 0;
       padding-right: 5px;
-      border-radius: 10px 0px 0px 10px;
+      border-radius: 8px 0px 0px 8px;
       border-right: 5px solid #17a1c5;
     }
     #memory {
       margin-left: 0;
       padding-left: 5px;
-      border-radius: 0px 10px 10px 0px;
+      border-radius: 0px 8px 8px 0px;
       border-left: 5px solid #0da3d5;
     }
 
