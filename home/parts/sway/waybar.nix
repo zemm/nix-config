@@ -276,7 +276,7 @@
           return-type = "json";
           interval = 5;
           format-icons = ["" ""];
-          on-click = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.bash}/bin/bash -ci ${pkgs.networkmanager}/bin/nmtui connect";
+          on-click = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.bash}/bin/bash -ci \"${pkgs.networkmanager}/bin/nmtui connect\"";
           #exec = pkgs.writeShellScript "waybar-vpn" ''
           #  #!${pkgs.bash}/bin/bash
           #  [ -d /proc/sys/net/ipv4/conf/wg0 ] \
