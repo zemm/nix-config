@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   wayland.windowManager.sway = {
     config = {
@@ -93,4 +93,231 @@
       };
     };
   };
+
+
+  programs.waybar.style = ''
+    @import "${inputs.catppuccin-waybar}/themes/latte.css";
+
+    @keyframes blink-warning {
+      70% {
+        color: white;
+      }
+      to {
+        color: white;
+        background-color: orange;
+      }
+    }
+
+    @keyframes blink-critical {
+      70% {
+        color: white;
+      }
+      to {
+        color: white;
+        background-color: red;
+      }
+    }
+
+    /* -----------------------------------------------------------------------------
+    * Base styles
+    * -------------------------------------------------------------------------- */
+
+    /* Reset all styles */
+    * {
+      color: @text;
+      border: none;
+      border-radius: 0;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* The whole bar */
+    #waybar {
+      background-color: alpha(@base, 1);
+      border: 0 solid alpha(@crust, 0.3);
+      color: @text;
+      font-family: UbuntuMono Nerd Font, Hack, Ubuntu;
+      font-size: 14px;
+    }
+
+    #workspaces {
+      border-right: 1px solid @crust;
+    }
+    #workspaces button {
+      padding: 0 5px;
+      border-left: 1px solid @mantle;
+    }
+    #workspaces button * {
+      color: @text;
+    }
+    #workspaces button.visible {
+      background-color: alpha(@peach, 0.5);
+    }
+    #workspaces button.focused {
+      background-color: @peach;
+    }
+    /*
+      * https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect
+      */
+    #workspaces button:hover {
+      background: @pink;
+      border-top: none;
+      border-right: none;
+      border-bottom: none;
+      padding: 0 5px;
+      box-shadow: inherit;
+      text-shadow: inherit;
+    }
+    #workspaces button.urgent {
+      background-color: @red;
+    }
+    #workspaces button.visible *,
+    #workspaces button.focused *,
+    #workspaces button.urgent *,
+    #workspaces button:hover * {
+      color: @base;
+    }
+
+    /* Each module */
+    #backlight,
+    #battery,
+    #bluetooth,
+    #clock,
+    #cpu,
+    #custom-keyboard-layout,
+    #custom-vpn,
+    #idle_inhibitor,
+    #memory,
+    #mode,
+    #network,
+    #pulseaudio,
+    #temperature,
+    #tray {
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-left: 2px;
+      margin-right: 2px;
+      border-radius: 10px;
+    }
+
+    #cpu {
+      margin-right: 0;
+      padding-right: 5px;
+      border-radius: 10px 0px 0px 10px;
+      border-right: 5px solid #17a1c5;
+    }
+    #memory {
+      margin-left: 0;
+      padding-left: 5px;
+      border-radius: 0px 10px 10px 0px;
+      border-left: 5px solid #0da3d5;
+    }
+
+    /* -----------------------------------------------------------------------------
+      * Module styles
+      * -------------------------------------------------------------------------- */
+
+    #idle_inhibitor { }
+    #bluetooth {  color: #ffffff; background-color: @blue; }
+    #custom-vpn.on {  color: #ffffff;   background-color: @mauve; }
+    #custom-vpn.off { color: @subtext0; background-color: @crust; }
+    #network {    color: #ffffff; background-color: @lavender; }
+    #cpu {        color: #ffffff; background-color: @sapphire; }
+    #memory {     color: #ffffff; background-color: @sky; }
+    #pulseaudio { color: #ffffff; background-color: @teal; }
+    #battery {    color: #ffffff; background-color: @green; }
+    #backlight {  color: #ffffff; background-color: @yellow; }
+    #tray {       color: #ffffff; background-color: @surface0; }
+    #clock { }
+
+
+    #battery {
+    }
+    #battery.warning {
+    }
+    #battery.critical {
+    }
+    #battery.warning.discharging {
+      background-color: @maroon;
+      animation-name: blink-warning;
+      animation-duration: 3s;
+    }
+    #battery.critical.discharging {
+      background-color: @red;
+      animation-name: blink-critical;
+      animation-duration: 2s;
+    }
+
+    #clock {
+      font-weight: bold;
+    }
+
+    #cpu {
+    }
+    #cpu.warning {
+    }
+    #cpu.critical {
+      animation-name: blink-critical;
+      animation-duration: 2s;
+    }
+
+    #custom-vpn.connected {
+    }
+    #custom-vpn.disconnected {
+      background-color: @crust;
+      color: @subtext0;
+    }
+
+    #memory {
+    }
+    #memory.warning {
+    }
+    #memory.critical {
+      animation-name: blink-critical;
+      animation-duration: 2s;
+    }
+
+    #mode {
+      background: #64727D;
+      border-top: 2px solid white;
+      /* To compensate for the top border and still have vertical centering */
+      padding-bottom: 2px;
+    }
+
+    #network {
+    }
+    #network.disconnected {
+      background-color: @red;
+    }
+
+    #pulseaudio {
+      background-color: @teal;
+    }
+    #pulseaudio.muted {
+    }
+
+    #custom-spotify {
+      color: rgb(102, 220, 105);
+    }
+
+    #temperature {
+    }
+    #temperature.critical {
+      background-color: @red;
+    }
+
+    #tray {
+      border-left: 1px solid @mantle;
+      border-right: 1px solid @mantle;
+    }
+
+    #window {
+      font-weight: bold;
+      padding-left: 10px;
+    }
+  '';
 }

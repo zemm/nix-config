@@ -33,13 +33,14 @@
         ];
         modules-right = [
           "idle_inhibitor"
-          "backlight"
+          #"bluetooth"
+          "custom/vpn"
+          "network"
           "cpu"
           "memory"
-          "network"
-          #"bluetooth"
           "pulseaudio"
           "battery"
+          #"backlight"
           "tray"
           "clock"
         ];
@@ -74,13 +75,13 @@
         };
 
         bluetooth = {
-          format = "bt:{status}";
+          format = "{icon}  {status}";
           #format-alt = "bt:{status}";
           interval = 30;
-          #format-icons = {
-          #  enabled = "";
-          #  disabled = "";
-          #};
+          format-icons = {
+            enabled = "";
+            disabled = "";
+          };
           tooltip-format = "bluetooth {status}";
           #on-click = "blueman-manager";
           on-click = "${pkgs.blueman}/bin/blueman-manager";
@@ -106,12 +107,13 @@
 
         cpu = {
           interval = 5;
-          format = "  {usage}% ({load})"; # Icon: microchip
+          #format = "  {usage}% {load}l"; # Icon: microchip
+          format = "  {usage}% {load}l"; # Icon: microchip
           states = {
             warning = 70;
             critical = 90;
           };
-          on-click = "${pkgs.alacritty}/bin/alacritty -e bash -ci htop --sort-key PERCENT_CPU";
+          on-click = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.bash}/bin/bash -ci htop --sort-key PERCENT_CPU";
         };
 
         idle_inhibitor = {
@@ -125,12 +127,13 @@
 
         memory = {
           interval = 5;
-          format = "  {}%"; # Icon: memory
+          #format = "  {}%u {used}u {avail}a {swapPercentage}%sw"; # Icon: memory
+          format = "  {}%u {used}u {avail}a {swapPercentage}%sw"; # Icon: memory
           states = {
             warning = 70;
             critical = 90;
           };
-          on-click = "${pkgs.alacritty}/bin/alacritty -e bash -ci htop --sort-key PERCENT_MEM";
+          on-click = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.bash}/bin/bash -ci htop --sort-key PERCENT_MEM";
           tooltip = true;
         };
 
@@ -140,6 +143,7 @@
           format-ethernet = "  {ifname}: {ipaddr}/{cidr}"; # Icon: ethernet
           format-disconnected = "⚠  Disconnected";
           tooltip-format = "{ifname}: {ipaddr}";
+          on-click = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.bash}/bin/bash -ci ${pkgs.networkmanager}/bin/nmtui";
         };
 
         # @TODO
@@ -253,24 +257,55 @@
         #    "on-click-right": "kitty --start-as normal bash -i bat",
         #},
 
-        # @TODO
-        #"custom/vpn":{
-        #    "format": "vpn {icon}",
-        #    "tooltip-format": "{icon}",
-        #    "exec": "~/.config/waybar/modules/vpn",
-        #    "return-type": "json",
-        #    "interval": 5,
-        #    "format-icons": ["",""]
-        #},
-
-        "custom/hello-from-waybar" = {
-          format = "hello {}";
-          max-length = 40;
-          interval = "once";
-          exec = pkgs.writeShellScript "hello-from-waybar" ''
-            echo "from within waybar"
+        "custom/vpn" = {
+          format = "{icon}  {alt}";
+          tooltip-format = "{}";
+          exec = pkgs.writeShellScript "waybar-vpn" ''
+            #!${pkgs.bash}/bin/bash
+            if [ -d /proc/sys/net/ipv4/conf/tun0 ]; then
+              conn=$( \
+                ${pkgs.networkmanager}/bin/nmcli c show --active \
+                  | ${pkgs.gnugrep}/bin/grep ' vpn ' \
+                  | ${pkgs.coreutils}/bin/head -n1 \
+                  | ${pkgs.gawk}/bin/awk '{print $1}' \
+              )
+              echo "{\"text\":\"Connected\", \"alt\":\"$conn\", \"class\":\"on\", \"percentage\":100}"
+            else
+              echo '{"text":"Disconnected", "alt":"vpn", "class":"off", "percentage":0}'
+            fi
           '';
+          return-type = "json";
+          interval = 5;
+          format-icons = ["" ""];
+          on-click = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.bash}/bin/bash -ci ${pkgs.networkmanager}/bin/nmtui connect";
+          #exec = pkgs.writeShellScript "waybar-vpn" ''
+          #  #!${pkgs.bash}/bin/bash
+          #  [ -d /proc/sys/net/ipv4/conf/wg0 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/at1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/be1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/bg1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/ch1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/hk1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/hu1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/is1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/it1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/nl1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/no1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/rs1 ] \
+          #    || [ -d /proc/sys/net/ipv4/conf/tun0 ] \
+          #  && echo '{"text":"Connected","class":"on","percentage":100}' \
+          #    || echo '{"text":"Disconnected","class":"off","percentage":0}'
+          #'';
         };
+
+        #"custom/hello-from-waybar" = {
+        #  format = "hello {}";
+        #  max-length = 40;
+        #  interval = "once";
+        #  exec = pkgs.writeShellScript "hello-from-waybar" ''
+        #    echo "from within waybar"
+        #  '';
+        #};
 
         "wlr/taskbar" = {
           format = "{icon}";
@@ -283,451 +318,5 @@
         };
       };
     };
-
-    style = ''
-      @import "${inputs.catppuccin-waybar}/themes/latte.css";
-
-      @keyframes blink-warning {
-        70% {
-          color: white;
-        }
-        to {
-          color: white;
-          background-color: orange;
-        }
-      }
-
-      @keyframes blink-critical {
-        70% {
-          color: white;
-        }
-        to {
-          color: white;
-          background-color: red;
-        }
-      }
-
-      /* -----------------------------------------------------------------------------
-      * Base styles
-      * -------------------------------------------------------------------------- */
-
-      /* Reset all styles */
-      * {
-        color: @text;
-        border: none;
-        border-radius: 0;
-        min-height: 0;
-        margin: 0;
-        padding: 0;
-      }
-
-      /* The whole bar */
-      #waybar {
-        background-color: alpha(@base, 1);
-        border: 0 solid alpha(@crust, 0.3);
-        color: @text;
-        font-family: UbuntuMono Nerd Font, Hack, Ubuntu;
-        font-size: 14px;
-      }
-
-      #workspaces {
-        border-right: 1px solid @crust;
-      }
-      #workspaces button {
-        padding: 0 5px;
-        border-left: 1px solid @mantle;
-      }
-      #workspaces button * {
-        color: @text;
-      }
-      #workspaces button.visible {
-        background-color: alpha(@peach, 0.5);
-      }
-      #workspaces button.focused {
-        background-color: @peach;
-      }
-      /*
-       * https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect
-       */
-      #workspaces button:hover {
-        background: @peach;
-        border-top: none;
-        border-right: none;
-        border-bottom: none;
-        padding: 0 5px;
-        box-shadow: inherit;
-        text-shadow: inherit;
-      }
-      #workspaces button.urgent {
-        background-color: @red;
-      }
-      #workspaces button.visible *,
-      #workspaces button.focused *,
-      #workspaces button.urgent *,
-      #workspaces button:hover * {
-        color: @base;
-      }
-
-      /* Each module */
-      #backlight,
-      #battery,
-      #bluetooth,
-      #clock,
-      #cpu,
-      #custom-keyboard-layout,
-      #idle_inhibitor,
-      #memory,
-      #mode,
-      #network,
-      #pulseaudio,
-      #temperature,
-      #tray {
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin-left: 2px;
-        margin-right: 2px;
-        border-radius: 10px;
-      }
-
-      /* -----------------------------------------------------------------------------
-       * Module styles
-       * -------------------------------------------------------------------------- */
-
-      #idle_inhibitor { }
-      #backlight {  background-color: shade(@lavender, 1.2); }
-      #cpu {        background-color: shade(@sapphire, 1.2); }
-      #memory {     background-color: shade(@sky, 1.2); }
-      #network {    background-color: shade(@pink, 1.2); }
-      #bluetooth { }
-      #pulseaudio { background-color: shade(@mauve, 1.9); }
-      #battery {    background-color: shade(@green, 1.8); }
-      #clock { }
-
-
-      #battery {
-      }
-      #battery.warning {
-      }
-      #battery.critical {
-      }
-      #battery.warning.discharging {
-        background-color: @maroon;
-        animation-name: blink-warning;
-        animation-duration: 3s;
-      }
-      #battery.critical.discharging {
-        background-color: @red;
-        animation-name: blink-critical;
-        animation-duration: 2s;
-      }
-
-      #clock {
-        font-weight: bold;
-      }
-
-      #cpu {
-      }
-      #cpu.warning {
-      }
-      #cpu.critical {
-        animation-name: blink-critical;
-        animation-duration: 2s;
-      }
-
-      #memory {
-      }
-      #memory.warning {
-      }
-      #memory.critical {
-        animation-name: blink-critical;
-        animation-duration: 2s;
-      }
-
-      #mode {
-        background: #64727D;
-        border-top: 2px solid white;
-        /* To compensate for the top border and still have vertical centering */
-        padding-bottom: 2px;
-      }
-
-      #network {
-      }
-      #network.disconnected {
-        background-color: @red;
-      }
-
-      #pulseaudio {
-        background-color: @teal;
-      }
-      #pulseaudio.muted {
-      }
-
-      #custom-spotify {
-        color: rgb(102, 220, 105);
-      }
-
-      #temperature {
-      }
-      #temperature.critical {
-        background-color: @red;
-      }
-
-      #tray {
-      }
-
-      #window {
-        font-weight: bold;
-        padding-left: 10px;
-      }
-    '';
   };
 }
-
-#      #workspaces button {
-#        color: @base;
-#        border-radius: 50%;
-#        margin: 0px 0px;
-#        padding: 4 6 2 6;
-#      }
-#
-#      #workspaces button:hover {
-#        color: @mauve;
-#        box-shadow: none;
-#        text-shadow: none;
-#        border: 0px;
-#        background: none;
-#      }
-#
-#      #workspaces button:hover * {
-#        color: @mauve;
-#        background-color: @base;
-#      }
-#
-#      #workspaces * {
-#        color: whitesmoke;
-#      }
-#
-#      #workspaces {
-#        border-style: solid;
-#        background-color: @base;
-#        opacity: 1;
-#        border-radius: 10px;
-#        margin: 8px 0px 8px 8px;
-#      }
-#
-#      #workspaces button.focused {
-#        color: @mauve;
-#        border-radius: 20px;
-#      }
-#
-#      #workspaces button.focused * {
-#        color: @mauve;
-#      }
-#
-#      #mode {
-#        color: #ebcb8b;
-#      }
-
-#      #clock,
-#      #custom-swap,
-#      #custom-cava-internal,
-#      #battery,
-#      #cpu,
-#      #memory,
-#      #idle_inhibitor,
-#      #temperature,
-#      #custom-keyboard-layout,
-#      #backlight,
-#      #network,
-#      #pulseaudio,
-#      #mode,
-#      #tray,
-#      #custom-power,
-#      #custom-pacman,
-#      #custom-launcher,
-#      #mpd {
-#        padding: 5px 8px;
-#        border-style: solid;
-#        background-color: shade(@base, 1);
-#        opacity: 1;
-#        margin: 8px 0;
-#      }
-#
-#      /* -----------------------------------------------------------------------------
-#        * Module styles
-#        * -------------------------------------------------------------------------- */
-#      #mpd {
-#        border-radius: 10px;
-#        color: @mauve;
-#        margin-left: 5px;
-#        background-color: rgba(0, 0, 0, 0);
-#      }
-#
-#      #mpd.2 {
-#        border-radius: 10px 0px 0px 10px;
-#        margin: 8px 0px 8px 6px;
-#        padding: 4px 12px 4px 10px;
-#      }
-#
-#      #mpd.3 {
-#        border-radius: 0px 0px 0px 0px;
-#        margin: 8px 0px 8px 0px;
-#        padding: 4px;
-#      }
-#
-#      #mpd.4 {
-#        border-radius: 0px 10px 10px 0px;
-#        margin: 8px 0px 8px 0px;
-#        padding: 4px 10px 4px 14px;
-#      }
-#
-#      #mpd.2,
-#      #mpd.3,
-#      #mpd.4 {
-#        background-color: @base;
-#        font-size: 14px;
-#      }
-#
-#      #mode {
-#        border-radius: 10px;
-#        color: @mauve;
-#        margin-right: 5px;
-#      }
-#
-#      #custom-cava-internal {
-#        border-radius: 10px;
-#        color: @mauve;
-#      }
-#
-#      #custom-swap {
-#        border-radius: 10px;
-#        color: @base;
-#        margin-left: 15px;
-#        background-color: @mauve;
-#      }
-#
-#      #clock {
-#        color: @sky;
-#        border-radius: 10px;
-#        margin: 8px 10px;
-#      }
-#
-#      #backlight {
-#        color: @yellow;
-#        border-radius: 10px 0 0 10px;
-#      }
-#
-#      #battery {
-#        color: #d8dee9;
-#        border-radius: 0 10px 10px 0;
-#        margin-right: 10px;
-#      }
-#
-#      #battery.charging {
-#        color: #81a1c1;
-#      }
-#
-#      @keyframes blink {
-#        to {
-#          color: @red;
-#        }
-#      }
-#
-#      #battery.critical:not(.charging) {
-#        color: #bf616a;
-#        animation-name: blink;
-#        animation-duration: 0.5s;
-#        animation-timing-function: linear;
-#        animation-iteration-count: infinite;
-#        animation-direction: alternate;
-#      }
-#
-#      #cpu {
-#        color: @sky;
-#      }
-#
-#      #cpu #cpu-icon {
-#        color: @sky;
-#      }
-#
-#      #memory {
-#        color: @sky;
-#      }
-#
-#      #network.disabled {
-#        color: #bf616a;
-#      }
-#
-#      #network {
-#        color: @green;
-#        border-radius: 10px;
-#        margin-right: 5px;
-#      }
-#
-#      #network.disconnected {
-#        color: #bf616a;
-#      }
-#
-#      #pulseaudio {
-#        color: @flamingo;
-#      }
-#
-#      #pulseaudio.muted {
-#        color: #3b4252;
-#      }
-#
-#      #temperature {
-#        color: @teal;
-#        border-radius: 10px 0 0 10px;
-#      }
-#
-#      #temperature.critical {
-#        color: @red;
-#      }
-#
-#      #idle_inhibitor {
-#        background-color: #ebcb8b;
-#        color: @base;
-#      }
-#
-#      #tray {
-#        margin: 8px 10px;
-#        border-radius: 10px;
-#      }
-#
-#      #custom-launcher,
-#      #custom-power {}
-#
-#      #custom-launcher {
-#        background-color: @mauve;
-#        color: @base;
-#        border-radius: 10px;
-#        padding: 5px 10px;
-#        margin-left: 15px;
-#      }
-#
-#      #custom-power {
-#        color: @base;
-#        background-color: @red;
-#        border-radius: 10px;
-#        margin-left: 5px;
-#        margin-right: 15px;
-#        padding: 5px 10px;
-#      }
-#
-#      #window {
-#        border-style: hidden;
-#        margin-left: 10px;
-#        padding: 8px 1rem; */
-#        margin-right: 10px;
-#        color: #eceff4;
-#      }
-#
-#      #custom-keyboard-layout {
-#        color: @peach;
-#        border-radius: 0 10px 10px 0;
-#        margin-right: 10px;
-#      }
