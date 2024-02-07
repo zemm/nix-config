@@ -108,7 +108,7 @@
         cpu = {
           interval = 5;
           #format = "  {usage}% {load}l"; # Icon: microchip
-          format = "  {usage}% {load}l"; # Icon: microchip
+          format = "  {usage}% ({load})"; # Icon: microchip
           states = {
             warning = 70;
             critical = 90;
@@ -128,7 +128,7 @@
         memory = {
           interval = 5;
           #format = "  {}%u {used}u {avail}a {swapPercentage}%sw"; # Icon: memory
-          format = "  {}%u {used}u {avail}a {swapPercentage}%sw"; # Icon: memory
+          format = "  {}% ({used}G  {avail}G  {swapPercentage}%󰓢)"; # Icon: memory
           states = {
             warning = 70;
             critical = 90;
