@@ -10,6 +10,7 @@
   ];
 
   home.packages = with pkgs; [
+    vagrant
   ];
 
   manual.html.enable = true;
