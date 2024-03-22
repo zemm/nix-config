@@ -12,6 +12,7 @@ in
       "audio"
       "video"
       "wheel"
+      "input"
     ] ++ ifTheyExist [
       "docker"
       "libvirtd"

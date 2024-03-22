@@ -30,11 +30,22 @@
   boot.initrd.luks.devices."luks-09d052fa-324d-453e-8c39-acd57048b8e0".keyFile = "/crypto_keyfile.bin";
 
   networking.hostName = "stoat";
+
+  networking.hosts = {
+  #  "127.0.0.1" = [
+  #    "foo.example.com"
+  #  ];
+  };
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = false;
 
   services.geoclue2.enable = true;
+
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="a8f8", ATTRS{idProduct}=="1828", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+  '';
 
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
