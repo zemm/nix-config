@@ -6,6 +6,7 @@
     ./parts/desktop/browsers.nix
     #./parts/desktop/randr.nix
     ./parts/desktop/vscode.nix
+    ./parts/desktop/office.nix
     ./parts/work
   ];
 
