@@ -16,33 +16,61 @@
 
   manual.html.enable = true;
 
-  #services.kanshi = {
-  #  enable = true;
-  #  # Use: swaymsg -t get_outputs
-  #  profiles = {
-  #    int = {
-  #      outputs = [
-  #        {
-  #          criteria = "eDP-1";
-  #          mode = "1920x1200";
-  #          position = "0,0";
-  #        }
-  #      ];
-  #    };
-  #    dell_4k_top = {
-  #      outputs = [
-  #        {
-  #          criteria = "Dell Inc. DELL P3222QE 3WJGT83";
-  #          mode = "3840x2160";
-  #          position = "0,0";
-  #        }
-  #        {
-  #          criteria = "eDP-1";
-  #          mode = "1920x1200";
-  #          position = "960,2160";
-  #        }
-  #      ];
-  #    };
+  services.kanshi = {
+    enable = true;
+    # Use: swaymsg -t get_outputs
+    profiles = {
+      int = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            mode = "1920x1200";
+            position = "0,0";
+          }
+        ];
+      };
+      dell_4k_top = {
+        outputs = [
+          {
+            criteria = "Dell Inc. DELL P3222QE 3WJGT83";
+            mode = "3840x2160";
+            position = "0,0";
+          }
+          {
+            criteria = "eDP-1";
+            mode = "1920x1200";
+            position = "960,2160";
+          }
+        ];
+      };
+      dell_wide_p3421w_cwfzh53_top = {
+        outputs = [
+          {
+            criteria = "Dell Inc. DELL P3421W CWFZH53";
+            mode = "3440x1440";
+            position = "0,0";
+          }
+          {
+            criteria = "eDP-1";
+            mode = "1920x1200";
+            position = "960,1440";
+          }
+        ];
+      };
+      dell_wide_p3421w_dpxzh53_top = {
+        outputs = [
+          {
+            criteria = "Dell Inc. DELL P3421W DPXZH53";
+            mode = "3440x1440";
+            position = "0,0";
+          }
+          {
+            criteria = "eDP-1";
+            mode = "1920x1200";
+            position = "960,1440";
+          }
+        ];
+      };
   #    aoc24_top = {
   #      outputs = [
   #        {
@@ -57,8 +85,8 @@
   #        }
   #      ];
   #    };
-  #  };
-  #};
+    };
+  };
 
   # @TODO: programs.borgmatic
   # @TODO: services.borgmatic
