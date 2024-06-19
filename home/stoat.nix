@@ -11,13 +11,14 @@
   ];
 
   home.packages = with pkgs; [
+    llm
     vagrant
   ];
 
   manual.html.enable = true;
 
   services.kanshi = {
-    enable = true;
+    enable = false;
     # Use: swaymsg -t get_outputs
     profiles = {
       int = {
