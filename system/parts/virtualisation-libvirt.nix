@@ -1,5 +1,7 @@
 { pkgs, lib, ... }:
 {
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
   virtualisation.libvirtd.enable = true;
 
   programs.virt-manager.enable = true;
