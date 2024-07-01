@@ -20,6 +20,7 @@
 
     # Nix
     nil # Nix LSP
+    nix-tree
     nixfmt # Nix formatter
     nvd # Differ
     nix-output-monitor # `nom`
