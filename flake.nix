@@ -25,7 +25,7 @@
     let
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
-      systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" "aarch64-linux" ];
       forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
       pkgsFor = lib.genAttrs systems (system: import nixpkgs {
         inherit system;
@@ -63,6 +63,11 @@
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
+        h = nixpkgs.lib.nixosSystem {
+          modules = [ ./system/hosts/h/configuration.nix ];
+          specialArgs = { inherit inputs outputs; };
+        };
+
         rlyeh = nixpkgs.lib.nixosSystem {
           modules = [ ./system/hosts/rlyeh/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
@@ -77,6 +82,17 @@
       # Standalone home-manager configuration entrypoint
       # Available through 'home-manager --flake .#your-username@your-hostname'
       homeConfigurations = {
+        "zemm@h" = home-manager.lib.homeManagerConfiguration {
+          modules = [
+            ./home/zemm_h.nix
+          ];
+          pkgs = pkgsFor.aarch64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+            pkgsUnstable = pkgsUnstableFor.aarch64-linux;
+          };
+        };
+
         "juperaja@stoat" = home-manager.lib.homeManagerConfiguration {
           modules = [
             {
