@@ -21,7 +21,7 @@
     # Nix
     nil # Nix LSP
     nix-tree
-    nixfmt # Nix formatter
+    nixfmt-classic # Nix formatter
     nvd # Differ
     nix-output-monitor # `nom`
   ];
@@ -37,7 +37,7 @@
     enable = true;
     enableSshSupport = false;
     #pinentryFlavor = "curses";
-    pinentryFlavor = "gnome3";
+    pinentryPackage = pkgs.pinentry-gnome3;
     defaultCacheTtl = 60*30;
     defaultCacheTtlSsh = 60*60*12;
   };

@@ -13,6 +13,9 @@
       ../../parts/desktop-base.nix
       ../../parts/virtualisation-podman.nix
       ../../parts/virtualisation-libvirt.nix
+      #../../parts/desktop/sway-hm.nix
+      #../../parts/desktop/i3.nix
+      ../../parts/desktop/i3-hm.nix
       ../../users/juperaja.nix
     ];
 
@@ -47,16 +50,6 @@
   services.udev.extraRules = ''
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="a8f8", ATTRS{idProduct}=="1828", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
   '';
-
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.sessionPackages = [ pkgs.sway ];
-  services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "colemak";
-    options = "caps:backspace,nbsp:none,terminate:ctrl_alt_bksp";
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;

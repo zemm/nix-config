@@ -2,7 +2,8 @@
   imports = [
     ./parts/base.nix
     ./parts/cli
-    ./parts/sway
+    #./parts/sway
+    ./parts/i3
     ./parts/desktop/browsers.nix
     #./parts/desktop/randr.nix
     ./parts/desktop/vscode.nix

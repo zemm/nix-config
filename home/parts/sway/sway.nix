@@ -81,7 +81,7 @@
       { timeout = 30*60;
         command = "${pkgs.swaylock}/bin/swaylock -f";
       }
-      { timeout = 120*60;
+      { timeout = 180*60;
         command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
@@ -280,9 +280,6 @@
     #config.right = "i";
     #config.up = "u";
     #config.down = "e";
-
-    # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.menu
-    #config.menu = "";
 
     # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.modes
     #config.modes = {};
