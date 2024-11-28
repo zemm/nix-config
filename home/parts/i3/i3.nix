@@ -13,9 +13,9 @@ in {
     hooks.postswitch = {
       "notify-i3" = "${pkgs.i3}/bin/i3-msg restart";
       "change-background" = "${cmdChangeWallpaper}";
-      #"keep-dpi" = ''
-      #  echo "Xft.dpi: 96" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
-      #'';
+      "keep-dpi" = ''
+        echo "Xft.dpi: 96" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
+      '';
     };
   };
 
