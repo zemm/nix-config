@@ -4,8 +4,11 @@
 
   services.libinput = {
     enable = true;
-    touchpad.naturalScrolling = true;
-    #mouse.naturalScrolling = true;
+    touchpad = {
+      naturalScrolling = true;
+      disableWhileTyping = true;
+      clickMethod = "clickfinger";
+    };
   };
 
   services.displayManager.defaultSession = "none+i3";

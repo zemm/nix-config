@@ -32,7 +32,11 @@ in {
     {
       position = "bottom";
       statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-bottom.toml";
-      fonts = [ "DejaVu Sans Mono" "Font Awesome 6 Free" "FontAwesome6Free" ];
+      fonts = {
+        names = [ "DejaVu Sans Mono" "Font Awesome 6 Free" "FontAwesome6Free" ];
+        style = "Semi-Condensed";
+        size = 11.0;
+      };
       extraConfig = ''
         workspace_min_width 30
       '';

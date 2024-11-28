@@ -1,10 +1,27 @@
 { inputs, outputs, lib, config, pkgs, ... }:
-{
+let
+  cmdChangeBg = "${pkgs.feh}/bin/feh --bg-scale ~/Pictures/wall";
+in {
   home.packages = with pkgs; [
     arandr
   ];
 
-  # @TODO: wallpaper
+  programs.feh.enable = true;
+
+  programs.autorandr = {
+    enable = true;
+    hooks.postswitch = {
+      "notify-i3" = "${pkgs.i3}/bin/i3-msg restart";
+      "change-background" = "${cmdChangeBg}";
+      #"keep-dpi" = ''
+      #  echo "Xft.dpi: 96" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
+      #'';
+    };
+  };
+
+  services.autorandr = {
+    enable = true;
+  };
 
   programs.rofi = {
     enable = true;
@@ -50,12 +67,22 @@
 
     config.workspaceAutoBackAndForth = true;
 
+    config.floating.criteria = [
+      { class = "Galculator"; }
+      { class = "Calculator"; }
+      { title = "i3_help"; }
+    ];
+
     config.gaps = {
       inner = 10;
       outer = 5;
     };
 
     config.terminal = "${pkgs.alacritty}/bin/alacritty";
+
+    config.startup = [
+      { command = "${cmdChangeBg}"; always = true; }
+    ];
 
     config.keybindings = let
       mod = cfg.config.modifier;
@@ -130,6 +157,7 @@
 
       # Rename current workspace
       #"${mod}+Shift+n" = "exec swaymsg rename workspace to \"$(swaymsg -t get_workspaces|jq '.[]|select(.focused==true)|.num'):$(${pkgs.gnome.zenity}/bin/zenity --entry --title 'Rename workspace' --text 'New name:' --entry-text '')\"";
+      "${mod}+Shift+n" = "exec exec NUM=$(i3-msg -t get_workspaces|jq \".[]|select(.focused==true)|.num\") && i3-input -F \"rename workspace to $NUM.%s\" -P \"New name for this workspace: $NUM.\"";
     };
   };
 }
