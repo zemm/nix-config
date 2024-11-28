@@ -1,6 +1,31 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 let
-  cmdChangeWallpaper = "test -d $HOME/Pictures/wall && find $HOME/Pictures/wall/ -type f | shuf -n1 | xargs --no-run-if-empty ${pkgs.feh}/bin/feh --bg-scale";
+  changeWallpaperCommand = "test -d $HOME/Pictures/wall && find $HOME/Pictures/wall/ -type f | shuf -n1 | xargs --no-run-if-empty ${pkgs.feh}/bin/feh --bg-scale";
+  #lockScreenCommand = "${pkgs.i3lock}/bin/i3lock --show-failed-attempts --ignore-empty-password --pointer=win --no-unlock-indicator --image=$HOME/Pictures/lock.png";
+  #lockScreenCommand = "${pkgs.i3lock}/bin/i3lock --show-failed-attempts --ignore-empty-password --pointer=win --image=$HOME/Pictures/lock.png";
+  lockScreenCommand = "${pkgs.i3lock-color}/bin/i3lock-color"
+    + " --show-failed-attempts"
+    + " --ignore-empty-password"
+    + " --pointer=win"
+    + " --color=00000000"
+    + " --image=$HOME/Pictures/lock.png"
+    + " --centered"
+    + " --radius 10"
+    + " --ring-width 1"
+    + " --separator-color=00000000"
+    + " --line-color=00000000"
+    + " --noinput-text=\"\""
+    + " --verif-text=\"\""
+    + " --wrong-text=\"\""
+    + " --inside-color=00000000"
+    + " --insidever-color=00000000"
+    + " --insidewrong-color=00000000"
+    + " --ring-color=00000000"
+    + " --ringver-color=05527533"
+    + " --ringwrong-color=05527566"
+    + " --keyhl-color=055275ff"
+    + " --bshl-color=055275ff"
+    + " --wrong-color=05527533";
 in {
   home.packages = with pkgs; [
     arandr
@@ -12,7 +37,7 @@ in {
     enable = true;
     hooks.postswitch = {
       "notify-i3" = "${pkgs.i3}/bin/i3-msg restart";
-      "change-background" = "${cmdChangeWallpaper}";
+      "change-background" = "${changeWallpaperCommand}";
       "keep-dpi" = ''
         echo "Xft.dpi: 96" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
       '';
@@ -44,9 +69,18 @@ in {
   };
 
   services.screen-locker = {
-    enable = true;
-    lockCmd = "${pkgs.i3lock}/bin/i3lock --show-failed-attempts --ignore-empty-password --pointer=win --no-unlock-indicator --image=$HOME/Pictures/lock.png";
-    inactiveInterval = 10;
+    enable = lib.mkDefault true;
+    lockCmd = "${lockScreenCommand} --nofork"; # --nofork from i3lock man page
+    inactiveInterval = 60;
+    xautolock = {
+      enable = lib.mkDefault false;
+      detectSleep = true;
+    };
+    xss-lock = {
+      extraOptions = [
+        "--transfer-sleep-lock" # from i3lock man page
+      ];
+    };
   };
 
   # @TODO https://nix-community.github.io/home-manager/options.xhtml#opt-services.xidlehook.enable
@@ -81,7 +115,7 @@ in {
     config.terminal = "${pkgs.alacritty}/bin/alacritty";
 
     config.startup = [
-      { command = "${cmdChangeWallpaper}"; always = true; }
+      { command = "${changeWallpaperCommand}"; always = true; }
     ];
 
     config.keybindings = let
@@ -147,13 +181,14 @@ in {
       "${mod}+minus" = "scratchpad show";
 
       "${mod}+Shift+r" = "reload";
-      #"${mod}+Shift+x" =
-      #  "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
-
       "${mod}+r" = "mode resize";
 
-      "${mod}+End" = "exec ${config.services.screen-locker.lockCmd} && ${pkgs.systemd}/bin/systemctl suspend";
-      "${mod}+Home" = "exec ${config.services.screen-locker.lockCmd}";
+      # Exits
+      "${mod}+Shift+x" = "exec i3-nagbar -t warning -m 'Haluatko oikeasti kirjautua ulos työpöydältä?' -b 'Juu-u' 'i3-msg exit'";
+      "${mod}+Shift+Control+x" = "exec i3-nagbar -t warning -m 'Haluatko oikeasti sammuttaa koko koneen?' -b 'No todellakin!' 'systemctl poweroff'";
+
+      "${mod}+End" = "exec ${lockScreenCommand} && ${pkgs.systemd}/bin/systemctl suspend";
+      "${mod}+Home" = "exec ${lockScreenCommand}";
       "${mod}+c" = "exec rofi -show calc";
 
       # Rename current workspace
@@ -161,7 +196,11 @@ in {
       "${mod}+Shift+n" = "exec NUM=$(i3-msg -t get_workspaces|jq \".[]|select(.focused==true)|.num\") && i3-input -F \"rename workspace to $NUM.%s\" -P \"New name for this workspace: $NUM.\"";
 
       # Rotate wallpaper
-      "${mod}+Shift+w" = "exec ${cmdChangeWallpaper}";
+      "${mod}+Shift+w" = "exec ${changeWallpaperCommand}";
+
+      "Print" = "exec --no-startup-id ${pkgs.shutter}/bin/shutter --full";
+      "Shift+Print" = "exec --no-startup-id ${pkgs.shutter}/bin/shutter --select";
+      "Mod1+Print" = "exec --no-startup-id ${pkgs.shutter}/bin/shutter";
 
       # Mediakeys
       "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5% && ${i3statusRefresh}";
