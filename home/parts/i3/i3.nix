@@ -86,6 +86,7 @@ in {
 
     config.keybindings = let
       mod = cfg.config.modifier;
+      i3statusRefresh = "killall -SIGUSR1 i3status";
     in {
       "${mod}+Return" = "exec ${cfg.config.terminal}";
       "${mod}+Shift+q" = "kill";
@@ -161,6 +162,14 @@ in {
 
       # Rotate wallpaper
       "${mod}+Shift+w" = "exec ${cmdChangeWallpaper}";
+
+      # Mediakeys
+      "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5% && ${i3statusRefresh}";
+      "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5% && ${i3statusRefresh}";
+      "Shift+XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1% && ${i3statusRefresh}";
+      "Shift+XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1% && ${i3statusRefresh}";
+      "XF86AudioMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle && ${i3statusRefresh}";
+      "XF86AudioMicMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle && ${i3statusRefresh}";
     };
   };
 }

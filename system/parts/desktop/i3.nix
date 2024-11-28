@@ -2,8 +2,17 @@
 {
   # https://nixos.wiki/wiki/I3
 
-  #services.illum.enable = true;
+  services.illum.enable = true;
   services.redshift.enable = true;
+
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = true;
+      disableWhileTyping = true;
+      clickMethod = "clickfinger";
+    };
+  };
 
   services.xserver = {
     enable = true;

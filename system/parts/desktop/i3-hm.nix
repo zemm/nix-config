@@ -2,6 +2,8 @@
 {
   # https://nixos.wiki/wiki/I3
 
+  services.illum.enable = true;
+
   services.libinput = {
     enable = true;
     touchpad = {
