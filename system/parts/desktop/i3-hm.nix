@@ -10,6 +10,9 @@
       naturalScrolling = true;
       disableWhileTyping = true;
       clickMethod = "clickfinger";
+      tappingDragLock = false;
+      tapping = false;
+      #additionalOptions = ... # raw config
     };
   };
 
@@ -27,6 +30,15 @@
       variant = "colemak";
       options = "eurosign:e,caps:backspace,nbsp:none,terminate:ctrl_alt_bksp";
     };
+
+    extraConfig = ''
+      Section "Extensions"
+          Option "DPMS" "false"
+      EndSection
+      Section "ServerFlags"
+          Option "BlankTime" "0"
+      EndSection
+    '';
 
     windowManager.i3.enable = true;
   };

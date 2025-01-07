@@ -43,7 +43,7 @@
       ];
     })
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
     powerline-fonts
     powerline-symbols
@@ -53,7 +53,6 @@
     ubuntu_font_family
   ];
 
-  hardware.opengl.enable = true;
   #hardware.enableAllFirmware = true;
 
   hardware.bluetooth.enable = true;
@@ -61,6 +60,8 @@
   hardware.bluetooth.settings.General = {
     Enable = "Source,Sink,Media,Socket";
   };
+
+  hardware.graphics.enable = true;
 
   networking.networkmanager.enable = true;
 
@@ -86,8 +87,6 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
-  sound.mediaKeys.enable = true;
   hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;

@@ -29,6 +29,7 @@ let
 in {
   home.packages = with pkgs; [
     arandr
+    gnome-calculator
   ];
 
   programs.feh.enable = true;
@@ -45,6 +46,10 @@ in {
   };
 
   services.autorandr = {
+    enable = true;
+  };
+
+  services.dunst = {
     enable = true;
   };
 
@@ -69,24 +74,38 @@ in {
   };
 
   services.screen-locker = {
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault false;
     lockCmd = "${lockScreenCommand} --nofork"; # --nofork from i3lock man page
-    inactiveInterval = 60;
+    inactiveInterval = 120;
     xautolock = {
       enable = lib.mkDefault false;
       detectSleep = true;
     };
     xss-lock = {
+      screensaverCycle = 120;
       extraOptions = [
         "--transfer-sleep-lock" # from i3lock man page
       ];
     };
   };
 
-  # @TODO https://nix-community.github.io/home-manager/options.xhtml#opt-services.xidlehook.enable
-  #services.xidlehook = {
-  #  enable = true;
-  #}
+  # https://nix-community.github.io/home-manager/options.xhtml#opt-services.xidlehook.enable
+  services.xidlehook = {
+    enable = true;
+    not-when-fullscreen = true;
+    timers = [
+      #{ delay = 480;
+      #  command = "xrandr --output \"eDP-1\" --brightness .7";
+      #  canceller = "xrandr --output \"eDP-1\" --brigthness 1";
+      #}
+      { delay = 60*30;
+        command = "${lockScreenCommand}";
+      }
+      { delay = 60*60;
+        command = "${lockScreenCommand} && ${pkgs.systemd}/bin/systemctl suspend";
+      }
+    ];
+  };
 
   # https://nix-community.github.io/home-manager/options.xhtml#opt-xsession.windowManager.i3.enable
   xsession.windowManager.i3 = let
@@ -106,6 +125,8 @@ in {
       { class = "Calculator"; }
       { title = "i3_help"; }
     ];
+
+    config.focus.wrapping = "workspace";
 
     config.gaps = {
       inner = 10;
@@ -203,10 +224,10 @@ in {
       "Mod1+Print" = "exec --no-startup-id ${pkgs.shutter}/bin/shutter";
 
       # Mediakeys
-      "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5% && ${i3statusRefresh}";
-      "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5% && ${i3statusRefresh}";
-      "Shift+XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1% && ${i3statusRefresh}";
-      "Shift+XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1% && ${i3statusRefresh}";
+      "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1% && ${i3statusRefresh}";
+      "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1% && ${i3statusRefresh}";
+      "Shift+XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5% && ${i3statusRefresh}";
+      "Shift+XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5% && ${i3statusRefresh}";
       "XF86AudioMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle && ${i3statusRefresh}";
       "XF86AudioMicMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle && ${i3statusRefresh}";
     };

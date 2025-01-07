@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # Basics
+    # Basics for cli
     dnsutils # `dig`, `nslookup`
     ipcalc
     sipcalc

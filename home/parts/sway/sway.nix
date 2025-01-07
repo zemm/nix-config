@@ -161,6 +161,8 @@
   in {
     enable = true;
 
+    config.focus.wrapping = "workspace";
+
     # https://man.archlinux.org/man/sway-input.5
     config.input = {
       # Dell latitude

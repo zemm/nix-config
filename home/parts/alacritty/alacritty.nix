@@ -11,8 +11,8 @@
       # @TODO Figure out what would be the Right Way to do this,
       # as currently I have no login shell with Sway and Alacritty
       # https://github.com/alacritty/alacritty/issues/4786
-      shell.program = "${pkgs.bashInteractive}/bin/bash";
-      shell.args = [ "-l" ];
+      terminal.shell.program = "${pkgs.bashInteractive}/bin/bash";
+      terminal.shell.args = [ "-l" ];
     };
   };
 }
