@@ -30,6 +30,7 @@ in {
   home.packages = with pkgs; [
     arandr
     gnome-calculator
+    gnome-text-editor
   ];
 
   programs.feh.enable = true;
