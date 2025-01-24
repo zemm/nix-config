@@ -31,6 +31,7 @@ in {
     arandr
     gnome-calculator
     gnome-text-editor
+    nautilus
   ];
 
   programs.feh.enable = true;
@@ -146,7 +147,7 @@ in {
     in {
       "${mod}+Return" = "exec ${cfg.config.terminal}";
       "${mod}+Shift+q" = "kill";
-      "${mod}+d" = "exec ${cfg.config.menu}";
+      "${mod}+d" = "exec ${pkgs.autorandr}/bin/autorandr --cycle";
       "${mod}+space" = "exec ${cfg.config.menu}";
 
       "${mod}+Left" = "focus left";
@@ -169,6 +170,7 @@ in {
       "${mod}+h" = "splith";
       "${mod}+v" = "splitv";
       "${mod}+f" = "fullscreen toggle";
+      "${mod}+z" = "fullscreen toggle";
       "${mod}+p" = "focus parent";
       "${mod}+Shift+p" = "focus child";
 
@@ -211,7 +213,8 @@ in {
 
       "${mod}+End" = "exec ${lockScreenCommand} && ${pkgs.systemd}/bin/systemctl suspend";
       "${mod}+Home" = "exec ${lockScreenCommand}";
-      "${mod}+c" = "exec rofi -show calc";
+      "${mod}+Shift+End" = "exec ${pkgs.systemd}/bin/systemctl hibernate";
+      "${mod}+c" = "exec ${pkgs.rofi}/bin/rofi -show calc";
 
       # Rename current workspace
       #"${mod}+Shift+n" = "exec swaymsg rename workspace to \"$(swaymsg -t get_workspaces|jq '.[]|select(.focused==true)|.num'):$(${pkgs.gnome.zenity}/bin/zenity --entry --title 'Rename workspace' --text 'New name:' --entry-text '')\"";
@@ -220,9 +223,9 @@ in {
       # Rotate wallpaper
       "${mod}+Shift+w" = "exec ${changeWallpaperCommand}";
 
-      "Print" = "exec --no-startup-id ${pkgs.shutter}/bin/shutter --full";
-      "Shift+Print" = "exec --no-startup-id ${pkgs.shutter}/bin/shutter --select";
-      "Mod1+Print" = "exec --no-startup-id ${pkgs.shutter}/bin/shutter";
+      #"Print" = "exec --no-startup-id ${pkgs.escrotum}/bin/escrotum --select --clipboard";
+      "Shift+Print" = "exec --no-startup-id ${pkgs.escrotum}/bin/escrotum --select --clipboard";
+      "Mod1+Print" = "exec ${pkgs.shutter}/bin/shutter";
 
       # Mediakeys
       "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1% && ${i3statusRefresh}";
