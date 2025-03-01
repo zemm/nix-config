@@ -10,6 +10,7 @@
       ../../parts/desktop-base.nix
       ../../parts/virtualisation-podman.nix
       ../../parts/virtualisation-libvirt.nix
+      ../../parts/desktop/i3-hm.nix
       ../../users/zemm.nix
     ];
 
@@ -37,12 +38,12 @@
     libmbim
 
     ## Gnome
-    gnome.gnome-tweaks
+    gnome-tweaks
     gnomeExtensions.appindicator
     gnomeExtensions.battery-time
     gnomeExtensions.bluetooth-battery
     gnomeExtensions.dash-to-panel
-    gnomeExtensions.emoji-selector
+    #gnomeExtensions.emoji-selector
     #gnomeExtensions.kitchen-timer
     gnomeExtensions.network-stats
     gnomeExtensions.spotify-tray
@@ -88,14 +89,14 @@
   networking.interfaces.wwp0s20f0u2i12.useDHCP = true;
 
   ## -P-
-  programs.bash.enableCompletion = true;
+  programs.bash.completion.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
 
   ## -S-
   security.chromiumSuidSandbox.enable = true;
-  security.pam.services.login.fprintAuth = true;
+  #security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
   security.pam.services.juperaja.enableGnomeKeyring = true;
 
@@ -112,22 +113,19 @@
   #services.printing.drivers = [ pkgs.hplipWithPlugin ];
   services.redshift.enable = true;
 
-  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+  services.udev.packages = with pkgs; [
+    gnome.gnome-settings-daemon
+  ];
 
-  services.xserver.autoRepeatDelay = 200;
-  services.xserver.autoRepeatInterval = 30;
-  services.xserver.enable = true;
+  # Enable touchpad support (enabled default in most desktopManager).
+  services.libinput.enable = true;
 
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  services.xserver.layout = "us";
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-
-  services.xserver.xkbVariant = "colemak";
-  services.xserver.xkbOptions = "eurosign:e,caps:backspace,nbsp:none";
+  services.xserver.xkb.layout = "us";
+  services.xserver.xkb.variant = "colemak";
+  services.xserver.xkb.options = "eurosign:e,caps:backspace,nbsp:none";
 
   #sound.mediaKeys.enable = true; # Not needed for Gnome
 
