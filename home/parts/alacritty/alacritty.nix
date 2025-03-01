@@ -13,6 +13,7 @@
       # https://github.com/alacritty/alacritty/issues/4786
       terminal.shell.program = "${pkgs.bashInteractive}/bin/bash";
       terminal.shell.args = [ "-l" ];
+      env.WINIT_X11_SCALE_FACTOR = "1";
     };
   };
 }
