@@ -32,6 +32,7 @@ in {
     gnome-calculator
     gnome-text-editor
     nautilus
+    shutter
   ];
 
   programs.feh.enable = true;
@@ -72,7 +73,7 @@ in {
 
   services.gnome-keyring = {
     enable = true;
-    #components = [ "secrets" ];
+    components = [ "secrets" ];
   };
 
   services.screen-locker = {
@@ -139,6 +140,8 @@ in {
 
     config.startup = [
       { command = "${changeWallpaperCommand}"; always = true; }
+      { command = "${pkgs.networkmanagerapplet}/bin/nm-applet"; }
+      { command = "${pkgs.blueman}/bin/blueman-applet"; }
     ];
 
     config.keybindings = let
@@ -190,6 +193,7 @@ in {
       "${mod}+7" = "workspace number 7";
       "${mod}+8" = "workspace number 8";
       "${mod}+9" = "workspace number 9";
+      "${mod}+0" = "workspace number 0";
 
       "${mod}+Shift+1" = "move container to workspace number 1";
       "${mod}+Shift+2" = "move container to workspace number 2";
@@ -200,6 +204,7 @@ in {
       "${mod}+Shift+7" = "move container to workspace number 7";
       "${mod}+Shift+8" = "move container to workspace number 8";
       "${mod}+Shift+9" = "move container to workspace number 9";
+      "${mod}+Shift+0" = "move container to workspace number 0";
 
       "${mod}+Shift+minus" = "move scratchpad";
       "${mod}+minus" = "scratchpad show";
@@ -213,7 +218,7 @@ in {
 
       "${mod}+End" = "exec ${lockScreenCommand} && ${pkgs.systemd}/bin/systemctl suspend";
       "${mod}+Home" = "exec ${lockScreenCommand}";
-      "${mod}+Shift+End" = "exec ${pkgs.systemd}/bin/systemctl hibernate";
+      "${mod}+Shift+End" = "exec ${lockScreenCommand} && ${pkgs.systemd}/bin/systemctl hibernate";
       "${mod}+c" = "exec ${pkgs.rofi}/bin/rofi -show calc";
 
       # Rename current workspace
